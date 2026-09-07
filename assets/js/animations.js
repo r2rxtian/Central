@@ -15,6 +15,7 @@
   // 1. Fast, Crisp Page Entrance Orchestration
   // ==========================================================================
   function initPageEntrance() {
+    if (window.location.search.includes('noanim')) return;
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
     // 1. Top Header: Slides down fast and cleanly
@@ -43,15 +44,6 @@
       ease: 'back.out(1.5)'
     }, '-=0.2');
 
-    // 4. Workspace Pills: Snappy spring
-    tl.from('.workspace-tab-btn, .workspace-actions-group > *', {
-      y: 10,
-      opacity: 0,
-      scale: 0.95,
-      stagger: 0.018,
-      duration: 0.28,
-      ease: 'power2.out'
-    }, '-=0.25');
 
     // 5. Favorite Apps Parent & Cards
     tl.from('.favorites-section', {
@@ -91,14 +83,15 @@
       }, '-=0.22');
     }
 
-    // 7. Right Sidebar Widgets: Snappy slide-in
-    tl.from('.dashboard-side-col > *', {
+    // 7. Weather Widget & Right Sidebar Unified Card: Snappy slide-in
+    tl.from(['.widget-datetime-card', '.dashboard-side-col > *'], {
       x: 20,
       opacity: 0,
       scale: 0.98,
-      stagger: 0.035,
+      stagger: 0.04,
       duration: 0.35,
-      ease: 'power3.out'
+      ease: 'power3.out',
+      clearProps: 'opacity,transform'
     }, '-=0.35');
   }
 

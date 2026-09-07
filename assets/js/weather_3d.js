@@ -144,8 +144,11 @@
     buildStormEnvironment();
     buildCloudsEnvironment();
 
-    // 6. Set initial active state
-    setWeatherMode('rain', false);
+    // 6. Set initial active state from real Clark Pampanga weather
+    const initialMode = card.dataset.weatherMode || 'clouds';
+    setWeatherMode(initialMode, false);
+    fetchLiveClarkWeather();
+    setInterval(fetchLiveClarkWeather, 600000); // Refresh every 10 min
 
     // 7. Setup Event Listeners
     setupInteractions();
@@ -610,7 +613,7 @@
   // ==========================================================================
   // Switch Weather Mode (Smooth GSAP Transition)
   // ==========================================================================
-  function setWeatherMode(weatherKey, animateTransition = true) {
+  function setWeatherMode(weatherKey, animateTransition = true, customTemp = null, customIcon = null) {
     if (!WEATHER_PRESETS[weatherKey]) return;
     currentWeather = weatherKey;
     const preset = WEATHER_PRESETS[weatherKey];
@@ -618,23 +621,9 @@
     // 1. Update UI Elements
     const iconEl = document.getElementById('weather-condition-icon');
     const tempEl = document.getElementById('weather-temp-display');
-    const labelEl = document.getElementById('weather-condition-label');
-    const pills = document.querySelectorAll('.weather-mode-pill');
 
-    if (iconEl) iconEl.textContent = preset.icon;
-    if (tempEl) tempEl.textContent = preset.temp;
-    if (labelEl) labelEl.textContent = preset.label;
-
-    pills.forEach(pill => {
-      if (pill.dataset.weather === weatherKey) {
-        pill.classList.add('active');
-        if (window.gsap && animateTransition) {
-          gsap.fromTo(pill, { scale: 0.93 }, { scale: 1, duration: 0.22, ease: 'back.out(1.6)', clearProps: 'transform' });
-        }
-      } else {
-        pill.classList.remove('active');
-      }
-    });
+    if (iconEl && customIcon) iconEl.textContent = customIcon;
+    if (tempEl && customTemp) tempEl.textContent = customTemp;
 
     // 2. Adjust Lighting & Atmospheric Fog
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
@@ -687,8 +676,53 @@
       }
     });
 
-    if (window.showToast && animateTransition) {
-      window.showToast(`3D Weather switched to ${preset.label}`);
+    }
+  }
+
+  // ==========================================================================
+  // Live Clark, Pampanga Weather Hydration (Open-Meteo API)
+  // ==========================================================================
+  async function fetchLiveClarkWeather() {
+    try {
+      const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=15.18&longitude=120.55&current=temperature_2m,relative_humidity_2m,weather_code,is_day&timezone=Asia%2FManila');
+      if (!res.ok) return;
+      const data = await res.json();
+      if (!data.current) return;
+
+      const code = Number(data.current.weather_code);
+      const isDay = Number(data.current.is_day);
+      const temp = Math.round(Number(data.current.temperature_2m));
+      const tempStr = `${temp}°C`;
+
+      let icon = '☀️';
+      let mode = 'sun';
+      if (code === 0) {
+        icon = isDay ? '☀️' : '🌙';
+        mode = 'sun';
+      } else if ([1, 2, 3, 45, 48].includes(code)) {
+        icon = isDay ? '⛅' : '☁️';
+        mode = 'clouds';
+      } else if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(code)) {
+        icon = '🌧️';
+        mode = 'rain';
+      } else if ([95, 96, 99].includes(code)) {
+        icon = '⛈️';
+        mode = 'storm';
+      } else {
+        icon = '⛅';
+        mode = 'clouds';
+      }
+
+      const tempEl = document.getElementById('weather-temp-display');
+      const iconEl = document.getElementById('weather-condition-icon');
+      if (tempEl) tempEl.textContent = tempStr;
+      if (iconEl) iconEl.textContent = icon;
+
+      if (mode !== currentWeather) {
+        setWeatherMode(mode, true, tempStr, icon);
+      }
+    } catch (e) {
+      // Silently keep current real/cached weather
     }
   }
 

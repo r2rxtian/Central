@@ -406,6 +406,374 @@ input {
   color: var(--text-main);
 }
 
+.nav-icon-btn.active {
+  background: var(--bg-input);
+  color: var(--color-primary);
+}
+
+/* ==========================================================================
+   Quick App Drawer Launcher (Popover)
+   ========================================================================== */
+.app-launcher-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.app-drawer-popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 380px;
+  max-width: calc(100vw - 32px);
+  max-height: 520px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 48px -8px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  z-index: 600;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px) scale(0.97);
+  transform-origin: top right;
+  transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), 
+              visibility 0.22s;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.app-drawer-popover.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+[data-theme="dark"] .app-drawer-popover {
+  background: rgba(19, 27, 46, 0.96);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 56px -8px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* Drawer Header */
+.app-drawer-header {
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+[data-theme="dark"] .app-drawer-header {
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.app-drawer-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-drawer-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-drawer-title-icon {
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+}
+
+.app-drawer-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.01em;
+}
+
+.app-drawer-count-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  background: rgba(124, 58, 237, 0.12);
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+}
+
+[data-theme="dark"] .app-drawer-count-badge {
+  background: rgba(192, 132, 252, 0.2);
+  color: #d8b4fe;
+}
+
+.app-drawer-close-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.app-drawer-close-btn:hover {
+  background: var(--bg-input);
+  color: var(--text-main);
+}
+
+/* Drawer Search Bar */
+.app-drawer-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.app-drawer-search-icon {
+  position: absolute;
+  left: 10px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.app-drawer-search-input {
+  width: 100%;
+  padding: 7px 28px 7px 32px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  font-size: 0.82rem;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.app-drawer-search-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.15);
+  background: var(--bg-card);
+}
+
+.app-drawer-search-clear {
+  position: absolute;
+  right: 8px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 4px;
+}
+
+.app-drawer-search-clear:hover {
+  color: var(--text-main);
+}
+
+/* Drawer Filter Pills (Wrapped, No horizontal scroll) */
+.app-drawer-pills {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.app-drawer-pill {
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: var(--bg-input);
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+.app-drawer-pill:hover {
+  color: var(--text-main);
+  background: var(--border-card-hover);
+}
+
+.app-drawer-pill.active {
+  background: var(--color-primary);
+  color: #ffffff;
+  border-color: var(--color-primary);
+  box-shadow: 0 2px 6px rgba(124, 58, 237, 0.25);
+}
+
+/* Drawer Body & 3x3 Grid (No side-to-side scroll) */
+.app-drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 10px 12px;
+  max-height: 290px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.app-drawer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* App Drawer Tile (Sleek 3x3) */
+.app-drawer-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 10px 4px 8px;
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  user-select: none;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.app-drawer-tile:hover {
+  background: var(--bg-input);
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px -3px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] .app-drawer-tile:hover {
+  box-shadow: 0 6px 16px -3px rgba(0, 0, 0, 0.4);
+}
+
+.app-drawer-tile-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  margin-bottom: 5px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.app-drawer-tile:hover .app-drawer-tile-icon {
+  transform: scale(1.08);
+}
+
+.app-drawer-tile-name {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.25;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-drawer-tile-dept {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 1px;
+}
+
+/* Pin / Favorite Star inside tile */
+.app-drawer-fav-star {
+  position: absolute;
+  top: 4px;
+  right: 5px;
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  opacity: 0;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  line-height: 1;
+}
+
+.app-drawer-tile:hover .app-drawer-fav-star {
+  opacity: 0.65;
+}
+
+.app-drawer-fav-star:hover,
+.app-drawer-fav-star.active {
+  opacity: 1 !important;
+  color: var(--color-star);
+  transform: scale(1.2);
+}
+
+/* Empty State */
+.app-drawer-empty {
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  grid-column: span 3;
+}
+
+/* Drawer Footer */
+.app-drawer-footer {
+  padding: 10px 16px;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[data-theme="dark"] .app-drawer-footer {
+  background: rgba(15, 23, 42, 0.4);
+}
+
+.app-drawer-footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.app-drawer-footer-link:hover {
+  background: rgba(124, 58, 237, 0.08);
+  color: var(--color-primary-light);
+  gap: 8px;
+}
+
 .notification-badge-dot {
   position: absolute;
   top: 7px;
@@ -479,11 +847,34 @@ input {
   max-width: 100% !important;
   margin: 0 !important;
   padding: 14px 28px 14px;
-  flex: 1;
+  flex: 0 0 auto;
   box-sizing: border-box;
 }
 
-/* True 2-Column Expansion: Main workspace ~74% (3fr), Sidebar ~26% (1fr, min 320px) */
+/* Dashboard Top Row: Welcome Banner & Weather Widget level-matched */
+.dashboard-top-row {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(320px, 1fr);
+  gap: 22px;
+  align-items: stretch;
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 14px;
+}
+
+.dashboard-top-row .hero-banner {
+  height: 100%;
+  min-height: 180px;
+  box-sizing: border-box;
+}
+
+.dashboard-top-row .widget-datetime-card {
+  height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+}
+
+/* Dashboard Lower Row: Applications (Left) & Unified Sidebar (Right) */
 .dashboard-layout {
   display: grid;
   grid-template-columns: minmax(0, 3fr) minmax(320px, 1fr);
@@ -497,29 +888,41 @@ input {
 .dashboard-main-col {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
   min-width: 0;
   width: 100%;
-  height: 100%;
 }
 
 /* Right Column */
 .dashboard-side-col {
   display: flex;
   flex-direction: column;
-  gap: 14px;
   min-width: 0;
   width: 100%;
+  height: 100%;
 }
 
-/* Footer */
+.sidebar-unified-card {
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Footer: Capped height, vertically centered text */
 .app-footer {
   border-top: 1px solid var(--border-subtle);
   background: var(--bg-card);
-  padding: 16px 28px;
-  margin-top: auto;
+  height: 28px;
+  min-height: 28px;
+  max-height: 28px;
+  padding: 0 28px;
+  margin-top: 0;
   width: 100%;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
   transition: background-color var(--transition-fast), border-color var(--transition-fast);
 }
 
@@ -530,15 +933,16 @@ input {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
-  font-size: 0.8rem;
+  gap: 12px;
+  font-size: 0.72rem;
+  line-height: 1;
   color: var(--text-secondary);
 }
 
 .footer-left {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .footer-brand {
@@ -546,14 +950,19 @@ input {
   color: var(--text-main);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  font-size: 0.76rem;
+  line-height: 1;
 }
 
 .footer-tagline {
   color: var(--text-secondary);
+  font-size: 0.71rem;
+  line-height: 1;
 }
 
 .footer-right {
-  font-size: 0.78rem;
+  font-size: 0.71rem;
   color: var(--text-secondary);
+  line-height: 1;
 }

@@ -4,6 +4,11 @@
   .dashboard-container {
     padding: 14px 20px 28px;
   }
+  .dashboard-top-row {
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
   .dashboard-layout {
     grid-template-columns: minmax(0, 1fr) 320px;
     gap: 14px;
@@ -11,16 +16,38 @@
 }
 
 @media (max-width: 1024px) {
-  .dashboard-layout {
-    grid-template-columns: 1fr;
+  .dashboard-top-row {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 14px;
   }
-  .dashboard-side-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  .dashboard-layout {
+    display: flex;
+    flex-direction: column;
     gap: 14px;
   }
+  .dashboard-main-col {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .dashboard-side-col {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .hero-banner,
+  .favorites-section,
+  .catalog-section,
+  .widget-datetime-card,
+  .sidebar-unified-card {
+    grid-column: auto;
+    grid-row: auto;
+    height: auto;
+  }
   .widget-datetime-card {
-    grid-column: span 2;
+    min-height: 180px;
   }
   .hero-banner {
     flex-direction: column;

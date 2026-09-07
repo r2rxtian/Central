@@ -874,14 +874,15 @@
   background: var(--bg-card);
   border: 1px solid var(--border-card);
   border-radius: var(--radius-lg);
-  padding: 22px 24px;
+  padding: 24px 26px;
   overflow: hidden;
   box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   box-sizing: border-box;
-  min-height: 205px;
+  min-height: 0;
+  height: 100%;
   transition: background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
@@ -1037,18 +1038,49 @@
   border-color: #bf96fc;
 }
 
-/* Company Information Panel */
-.widget-company-card {
+/* ==========================================================================
+   5. Unified Sidebar Container: Company Info, Announcements & Quick Links
+   ========================================================================== */
+.sidebar-unified-card {
   background: var(--bg-card);
   border: 1px solid var(--border-card);
   border-radius: var(--radius-lg);
-  padding: 22px 24px;
   box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  justify-content: space-between;
+  overflow: hidden;
   box-sizing: border-box;
-  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+  height: 100%;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.unified-sidebar-section {
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.unified-sidebar-section + .unified-sidebar-section {
+  border-top: 1px solid var(--border-subtle);
+}
+
+.unified-company-section {
+  padding-bottom: 16px;
+}
+
+.unified-announcements-section {
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+.unified-quicklinks-section {
+  padding-top: 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .company-card-header {
@@ -1141,18 +1173,6 @@
 }
 
 /* Announcements Panel */
-.widget-announcements-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-card);
-  border-radius: var(--radius-lg);
-  padding: 22px 24px;
-  box-shadow: var(--shadow-card);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  box-sizing: border-box;
-  transition: background-color var(--transition-fast), border-color var(--transition-fast);
-}
 
 .announcement-slide-box {
   display: flex;
@@ -1286,18 +1306,6 @@
 }
 
 /* Quick Links Panel */
-.widget-quicklinks-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-card);
-  border-radius: var(--radius-lg);
-  padding: 22px 24px;
-  box-shadow: var(--shadow-card);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  box-sizing: border-box;
-  transition: background-color var(--transition-fast), border-color var(--transition-fast);
-}
 
 .quicklinks-grid {
   display: grid;

@@ -1,54 +1,18 @@
 <?php
 /**
- * CentralPoint Company Sidebar Component (Right Column)
- * Matches reference image proportions and layout exactly
+ * CentralPoint Company Sidebar Component:
+ * Shared Unified Container for La Rose Noire Company Info, Announcements, and Quick Links
  */
 ?>
-<aside class="dashboard-side-col">
-  <!-- 1. Date, Time & 3D Interactive Weather Widget -->
-  <div class="widget-datetime-card" id="widget-datetime-card">
-    <!-- 3D WebGL Weather Simulation Canvas (Three.js 3D Rain, Sun, Storm, Clouds) -->
-    <div class="weather-3d-viewport" id="weather-3d-viewport">
-      <canvas id="weather-3d-canvas"></canvas>
-      <div class="weather-glass-reflection"></div>
-    </div>
+<div class="sidebar-unified-card" id="sidebar-unified-card">
 
-    <!-- Foreground Content Layer -->
-    <div class="datetime-info-col">
-      <span class="datetime-day-date" id="live-date-display">Monday, Sep 7, 2026</span>
-      <span class="datetime-digital-clock" id="live-clock-display">11:17 AM</span>
-      
-      <!-- Live Weather Condition Tag & Location -->
-      <div class="weather-status-badge" id="weather-status-badge">
-        <span class="weather-condition-icon" id="weather-condition-icon">🌧️</span>
-        <span class="weather-temp" id="weather-temp-display">27°C</span>
-        <span class="weather-dot">•</span>
-        <span class="weather-condition-label" id="weather-condition-label">3D Rain Simulation</span>
-      </div>
-
-      <div class="weather-location-row">
-        <span class="weather-loc-icon"><?= renderIcon('map-pin', '', 11) ?></span>
-        <span class="weather-loc-name">Carmona, Cavite</span>
-      </div>
-
-      <!-- Quick 3D Weather Switcher -->
-      <div class="weather-mode-selector" id="weather-mode-selector" title="Switch 3D Simulation">
-        <button class="weather-mode-pill active" data-weather="rain" title="3D Rain Simulation">🌧️ Rain (3D)</button>
-        <button class="weather-mode-pill" data-weather="sun" title="3D Sun Simulation">☀️ Sun</button>
-        <button class="weather-mode-pill" data-weather="storm" title="3D Storm & Lightning">⛈️ Storm</button>
-        <button class="weather-mode-pill" data-weather="clouds" title="3D Volumetric Clouds">⛅ Clouds</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 2. La Rose Noire Philippines Company Info -->
-  <div class="widget-company-card">
+  <!-- Section A: Company Profile Info -->
+  <div class="unified-sidebar-section unified-company-section">
     <div class="company-card-header">
       <h3 class="company-card-title"><?= htmlspecialchars($companyInfo['name']) ?></h3>
       <span class="company-card-tagline"><?= htmlspecialchars($companyInfo['tagline']) ?></span>
     </div>
 
-    <!-- Split Body: Image on left, contact info on right -->
     <div class="company-card-body-row">
       <div class="company-card-img-wrap">
         <img src="assets/images/lrn-building-only.jpg" alt="La Rose Noire Philippines Facility" class="company-card-img">
@@ -78,12 +42,12 @@
     </div>
 
     <div class="company-slogan-italic">
-      <?= htmlspecialchars($companyInfo['slogan']) ?>
+      <?= nl2br(htmlspecialchars($companyInfo['slogan'])) ?>
     </div>
   </div>
 
-  <!-- 3. Announcements Panel with Carousel -->
-  <div class="widget-announcements-card">
+  <!-- Section B: Announcements Panel with Carousel -->
+  <div class="unified-sidebar-section unified-announcements-section">
     <div class="section-header-row">
       <div class="section-title-wrap">
         <span class="section-header-icon" style="color: #c084fc;">
@@ -128,8 +92,8 @@
     </div>
   </div>
 
-  <!-- 4. Quick Links Panel -->
-  <div class="widget-quicklinks-card">
+  <!-- Section C: Quick Links Panel -->
+  <div class="unified-sidebar-section unified-quicklinks-section">
     <div class="section-header-row">
       <div class="section-title-wrap">
         <span class="section-header-icon" style="color: #0284c7;">
@@ -151,4 +115,5 @@
       <?php endforeach; ?>
     </div>
   </div>
-</aside>
+
+</div>

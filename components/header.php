@@ -65,16 +65,58 @@
         </span>
       </button>
 
-      <!-- Notifications -->
-      <button class="nav-icon-btn" id="notifications-btn" title="3 unread notifications" aria-label="Notifications">
-        <?= renderIcon('bell', '', 19) ?>
-        <span class="notification-badge-dot"></span>
-      </button>
+      <!-- 9-dot App Drawer Launcher Wrap -->
+      <div class="app-launcher-wrap" id="app-launcher-wrap">
+        <button class="nav-icon-btn" id="app-launcher-btn" title="Quick App Launcher" aria-label="App Launcher" aria-expanded="false" aria-haspopup="dialog">
+          <?= renderIcon('grid-9', '', 19) ?>
+        </button>
 
-      <!-- 9-dot App Drawer Launcher -->
-      <button class="nav-icon-btn" id="app-launcher-btn" title="Quick App Launcher" aria-label="App Launcher">
-        <?= renderIcon('grid-9', '', 19) ?>
-      </button>
+        <!-- Floating Quick App Drawer Popover -->
+        <div class="app-drawer-popover" id="app-drawer-popover" role="dialog" aria-label="Quick App Launcher" aria-hidden="true">
+          <!-- Drawer Header -->
+          <div class="app-drawer-header">
+            <div class="app-drawer-title-row">
+              <div class="app-drawer-title-wrap">
+                <span class="app-drawer-title-icon"><?= renderIcon('grid-9', '', 16) ?></span>
+                <span class="app-drawer-title">Quick Apps</span>
+                <span class="app-drawer-count-badge" id="app-drawer-count">48</span>
+              </div>
+              <button class="app-drawer-close-btn" id="app-drawer-close-btn" title="Close launcher" aria-label="Close">
+                <?= renderIcon('x', '', 14) ?>
+              </button>
+            </div>
+
+            <!-- Fast Search Filter -->
+            <div class="app-drawer-search-wrap">
+              <span class="app-drawer-search-icon"><?= renderIcon('search', '', 14) ?></span>
+              <input 
+                type="text" 
+                id="app-drawer-search-input" 
+                class="app-drawer-search-input" 
+                placeholder="Find an app or tool..." 
+                autocomplete="off"
+                spellcheck="false"
+              >
+              <button class="app-drawer-search-clear" id="app-drawer-search-clear" title="Clear search" style="display: none;">&times;</button>
+            </div>
+
+            <!-- Fast Category Pills -->
+            <div class="app-drawer-pills" id="app-drawer-pills">
+              <button class="app-drawer-pill active" data-drawer-cat="3x3">★ Pinned</button>
+              <button class="app-drawer-pill" data-drawer-cat="all">All</button>
+              <button class="app-drawer-pill" data-drawer-cat="it">IT</button>
+              <button class="app-drawer-pill" data-drawer-cat="hr">HR</button>
+              <button class="app-drawer-pill" data-drawer-cat="qa">QA</button>
+              <button class="app-drawer-pill" data-drawer-cat="operations">Ops</button>
+            </div>
+          </div>
+
+          <!-- Drawer Scrollable Tile Grid -->
+          <div class="app-drawer-body" id="app-drawer-body">
+            <div class="app-drawer-grid" id="app-drawer-grid"></div>
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>

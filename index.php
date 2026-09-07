@@ -42,16 +42,16 @@ require_once __DIR__ . '/components/icons.php';
 
     <!-- Main Dashboard Container: Fluid Full-Width -->
     <main class="dashboard-container w-full">
+      <!-- 1. Top Row: Welcome Hero Banner (Left) + Weather & Clock Widget (Right) -->
+      <div class="dashboard-top-row">
+        <?php include __DIR__ . '/components/welcome_banner.php'; ?>
+        <?php include __DIR__ . '/components/weather_widget.php'; ?>
+      </div>
+
+      <!-- 2. Lower Dashboard: Applications (Left) + Shared Unified Container (Right) -->
       <div class="dashboard-layout">
-        
         <!-- Left Main Content Column -->
         <div class="dashboard-main-col">
-          <!-- Welcome Hero Banner -->
-          <?php include __DIR__ . '/components/welcome_banner.php'; ?>
-
-          <!-- Saved Workspaces Toolbar -->
-          <?php include __DIR__ . '/components/workspace_bar.php'; ?>
-
           <!-- Favorite Apps Section -->
           <?php include __DIR__ . '/components/favorite_apps.php'; ?>
 
@@ -59,9 +59,10 @@ require_once __DIR__ . '/components/icons.php';
           <?php include __DIR__ . '/components/application_catalog.php'; ?>
         </div>
 
-        <!-- Right Side Column (Date/Time, Company Info, Announcements, Quick Links) -->
-        <?php include __DIR__ . '/components/company_sidebar.php'; ?>
-
+        <!-- Right Side Column: Shared Container (Company Profile, Announcements, Quick Links) -->
+        <aside class="dashboard-side-col">
+          <?php include __DIR__ . '/components/company_sidebar.php'; ?>
+        </aside>
       </div>
     </main>
 

@@ -1100,6 +1100,20 @@
 
     if (clockEl) clockEl.textContent = timeStr;
     if (dateEl) dateEl.textContent = dateStr;
+
+    const greetingEl = document.getElementById('hero-greeting-overline');
+    if (greetingEl) {
+      const rawHours = now.getHours();
+      let greeting = 'GOOD EVENING,';
+      if (rawHours >= 5 && rawHours < 12) {
+        greeting = 'GOOD MORNING,';
+      } else if (rawHours >= 12 && rawHours < 18) {
+        greeting = 'GOOD AFTERNOON,';
+      }
+      if (greetingEl.textContent !== greeting) {
+        greetingEl.textContent = greeting;
+      }
+    }
   }
 
   // ==========================================================================
@@ -1172,8 +1186,194 @@
     window.showToast('You have 3 unread notifications from HR & IT.');
   });
 
-  document.getElementById('app-launcher-btn')?.addEventListener('click', () => {
-    window.showToast('Quick App Drawer opened.');
+  // ==========================================================================
+  // Quick App Drawer (9-Dot Launcher Popover)
+  // ==========================================================================
+  const appLauncherBtn = document.getElementById('app-launcher-btn');
+  const appDrawerPopover = document.getElementById('app-drawer-popover');
+  const appDrawerCloseBtn = document.getElementById('app-drawer-close-btn');
+  const appDrawerSearchInput = document.getElementById('app-drawer-search-input');
+  const appDrawerSearchClear = document.getElementById('app-drawer-search-clear');
+  const appDrawerGrid = document.getElementById('app-drawer-grid');
+  const appDrawerCount = document.getElementById('app-drawer-count');
+  const appDrawerViewAll = document.getElementById('app-drawer-view-all');
+
+  let drawerCategory = '3x3';
+  let drawerSearch = '';
+
+  window.refreshAppDrawer = function () {
+    if (appDrawerPopover?.classList.contains('open')) {
+      renderAppDrawer();
+    }
+  };
+
+  function openAppDrawer() {
+    if (!appDrawerPopover) return;
+    appDrawerPopover.classList.add('open');
+    appLauncherBtn?.classList.add('active');
+    appLauncherBtn?.setAttribute('aria-expanded', 'true');
+    appDrawerPopover.setAttribute('aria-hidden', 'false');
+    renderAppDrawer();
+    setTimeout(() => appDrawerSearchInput?.focus(), 50);
+  }
+
+  function closeAppDrawer() {
+    if (!appDrawerPopover) return;
+    appDrawerPopover.classList.remove('open');
+    appLauncherBtn?.classList.remove('active');
+    appLauncherBtn?.setAttribute('aria-expanded', 'false');
+    appDrawerPopover.setAttribute('aria-hidden', 'true');
+  }
+
+  function toggleAppDrawer() {
+    if (appDrawerPopover?.classList.contains('open')) {
+      closeAppDrawer();
+    } else {
+      openAppDrawer();
+    }
+  }
+
+  function renderAppDrawer() {
+    if (!appDrawerGrid) return;
+
+    let filtered = [];
+
+    if (drawerSearch) {
+      const q = drawerSearch.toLowerCase();
+      filtered = state.applications.filter(app => {
+        const matchesName = app.name.toLowerCase().includes(q);
+        const matchesDept = (app.department || '').toLowerCase().includes(q);
+        const matchesCat = (app.categoryLabel || '').toLowerCase().includes(q);
+        const matchesKeywords = (app.keywords || '').toLowerCase().includes(q);
+        return matchesName || matchesDept || matchesCat || matchesKeywords;
+      });
+    } else if (drawerCategory === '3x3' || drawerCategory === 'fav') {
+      // Pinned section + completed 3rd row below for a 3x3 grid (9 apps)
+      const favApps = state.favorites.map(id => getAppById(id)).filter(Boolean);
+      const remainingApps = state.applications.filter(app => !state.favorites.includes(app.id));
+      filtered = [...favApps, ...remainingApps].slice(0, 9);
+    } else if (drawerCategory !== 'all') {
+      filtered = state.applications.filter(app => app.category.toLowerCase() === drawerCategory.toLowerCase());
+    } else {
+      filtered = state.applications;
+    }
+
+    if (appDrawerCount) {
+      appDrawerCount.textContent = filtered.length;
+    }
+
+    appDrawerGrid.innerHTML = '';
+
+    if (filtered.length === 0) {
+      appDrawerGrid.innerHTML = `
+        <div class="app-drawer-empty">
+          <div style="font-size: 1.5rem; margin-bottom: 6px;">🔍</div>
+          <div>No applications found</div>
+          <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">Try another search keyword or category.</div>
+        </div>
+      `;
+      return;
+    }
+
+    filtered.forEach(app => {
+      const tile = document.createElement('div');
+      tile.className = 'app-drawer-tile';
+      tile.dataset.appId = app.id;
+      tile.title = `${app.name} (${app.categoryLabel})`;
+
+      const isFav = state.favorites.includes(app.id);
+      const bgColor = ICON_COLORS[app.iconColor] || '#2563eb';
+
+      tile.innerHTML = `
+        <button class="app-drawer-fav-star ${isFav ? 'active' : ''}" title="${isFav ? 'Remove from favorites' : 'Pin to favorites'}" aria-label="Toggle favorite">
+          ★
+        </button>
+        <div class="app-drawer-tile-icon" style="background-color: ${bgColor};">
+          ${getIconSvg(app.icon, 20)}
+        </div>
+        <div class="app-drawer-tile-name">${app.name}</div>
+        <div class="app-drawer-tile-dept">${app.categoryLabel}</div>
+      `;
+
+      // Tile click -> Instant launch
+      tile.addEventListener('click', (e) => {
+        if (e.target.closest('.app-drawer-fav-star')) return;
+        window.launchApp(app.id);
+        closeAppDrawer();
+      });
+
+      // Star click -> toggle favorite
+      tile.querySelector('.app-drawer-fav-star')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        window.toggleFavorite(app.id);
+        renderAppDrawer();
+      });
+
+      appDrawerGrid.appendChild(tile);
+    });
+  }
+
+  // App Launcher event listeners
+  appLauncherBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleAppDrawer();
+  });
+
+  appDrawerCloseBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeAppDrawer();
+  });
+
+  // Search input in drawer
+  appDrawerSearchInput?.addEventListener('input', (e) => {
+    drawerSearch = e.target.value.trim().toLowerCase();
+    if (appDrawerSearchClear) {
+      appDrawerSearchClear.style.display = drawerSearch ? 'block' : 'none';
+    }
+    renderAppDrawer();
+  });
+
+  appDrawerSearchClear?.addEventListener('click', () => {
+    if (appDrawerSearchInput) {
+      appDrawerSearchInput.value = '';
+      drawerSearch = '';
+      appDrawerSearchClear.style.display = 'none';
+      renderAppDrawer();
+      appDrawerSearchInput.focus();
+    }
+  });
+
+  // Drawer Category Pills
+  document.querySelectorAll('.app-drawer-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.app-drawer-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      drawerCategory = pill.dataset.drawerCat || 'all';
+      renderAppDrawer();
+    });
+  });
+
+  // Footer "View All 48 Applications" link
+  appDrawerViewAll?.addEventListener('click', () => {
+    closeAppDrawer();
+    const catalog = document.getElementById('catalog-section');
+    if (catalog) {
+      catalog.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+
+  // Close when clicking outside drawer
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#app-launcher-wrap') && appDrawerPopover?.classList.contains('open')) {
+      closeAppDrawer();
+    }
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && appDrawerPopover?.classList.contains('open')) {
+      closeAppDrawer();
+    }
   });
 
 

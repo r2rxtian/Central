@@ -4,6 +4,8 @@
  * All applications, categories, announcements, company details, and quick links
  */
 
+date_default_timezone_set('Asia/Manila');
+
 $currentUser = [
     'name' => 'Juan Dela Cruz',
     'role' => 'Employee',
@@ -16,7 +18,7 @@ $currentUser = [
 $companyInfo = [
     'name' => 'La Rose Noire Philippines',
     'tagline' => 'Food Manufacturing • Premium Pastry Solutions',
-    'slogan' => 'Exceptional Indulgence for a Sweeter Tomorrow.',
+    'slogan' => 'Discover a range of Plant-based & Specialty Products that caters a wide range of customers',
     'address' => 'Lot 1-A & B, Clark IE-05 Area, M.A. Roxas Highway,
 Clark Freeport Zone, Philippines',
     'email' => 'office@la-rose-noire.com',
@@ -746,5 +748,17 @@ $quickLinks = [
         'title' => 'Company Policies',
         'icon' => 'file-text',
         'url' => 'https://policies.larosenoire.ph'
+    ],
+    [
+        'id' => 'qa-audits',
+        'title' => 'QA & Audits',
+        'icon' => 'shield-check',
+        'url' => 'https://qa.larosenoire.ph'
+    ],
+    [
+        'id' => 'events-calendar',
+        'title' => 'Events Calendar',
+        'icon' => 'calendar',
+        'url' => 'https://calendar.larosenoire.ph'
     ]
 ];

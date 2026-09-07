@@ -15,11 +15,6 @@
         <span class="section-subheading" id="catalog-subheading">Browse and launch all 48 company applications.</span>
       </div>
     </div>
-
-    <button class="section-action-link purple" id="view-all-apps-btn">
-      <span id="view-all-apps-label">View all 48 apps</span>
-      <?= renderIcon('arrow-right-circle', '', 15) ?>
-    </button>
   </div>
 
   <!-- 4x4 Application Cards Grid (16 cards per page) -->
