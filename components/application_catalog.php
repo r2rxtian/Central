@@ -98,13 +98,14 @@
         'teal' => '#14b8a6',
         'pink' => '#f472b6',
         'green' => '#10b981',
+        'Green' => '#10b981',
         'magenta' => '#c084fc',
         'orange' => '#f97316',
         'cyan' => '#0ea5e9'
     ];
-    $top8 = array_slice($applications, 0, 8);
-    foreach ($top8 as $app):
-        $bgColor = $catalogIconColors[$app['iconColor']] ?? '#3b82f6';
+    $top12 = array_slice($applications, 0, 12);
+    foreach ($top12 as $app):
+        $bgColor = $catalogIconColors[strtolower($app['iconColor'])] ?? ($catalogIconColors[$app['iconColor']] ?? '#3b82f6');
     ?>
     <div class="app-catalog-card" data-app-id="<?= htmlspecialchars($app['id']) ?>" onclick="window.launchApp('<?= htmlspecialchars($app['id']) ?>')">
       <div class="app-card-icon-box" style="background-color: <?= $bgColor ?>;">
@@ -124,7 +125,7 @@
   <!-- Pagination Controls Row -->
   <div class="catalog-pagination-row">
     <div class="pagination-count-label" id="pagination-count-label">
-      Showing top 8 of 48 apps
+      Showing 1–12 of 48 apps
     </div>
 
     <div class="pagination-controls">
@@ -139,8 +140,6 @@
         <div class="page-dot-btn" data-page="2"></div>
         <div class="page-dot-btn" data-page="3"></div>
         <div class="page-dot-btn" data-page="4"></div>
-        <div class="page-dot-btn" data-page="5"></div>
-        <div class="page-dot-btn" data-page="6"></div>
       </div>
 
       <!-- Next Button -->

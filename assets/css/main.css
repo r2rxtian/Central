@@ -478,7 +478,7 @@ input {
   width: 100% !important;
   max-width: 100% !important;
   margin: 0 !important;
-  padding: 20px 28px 32px;
+  padding: 14px 28px 14px;
   flex: 1;
   box-sizing: border-box;
 }
@@ -497,7 +497,7 @@ input {
 .dashboard-main-col {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
   min-width: 0;
   width: 100%;
 }

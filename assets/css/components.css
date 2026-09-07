@@ -297,11 +297,11 @@
   background: var(--bg-card);
   border: 1px solid var(--border-card);
   border-radius: var(--radius-lg);
-  padding: 22px 24px;
+  padding: 13px 24px;
   box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
   width: 100%;
   box-sizing: border-box;
   transition: background-color var(--transition-fast), border-color var(--transition-fast);
@@ -523,11 +523,11 @@
   background: var(--bg-card);
   border: 1px solid var(--border-card);
   border-radius: var(--radius-lg);
-  padding: 22px 24px;
+  padding: 13px 24px 12px;
   box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
   width: 100%;
   box-sizing: border-box;
   transition: background-color var(--transition-fast), border-color var(--transition-fast);
@@ -784,7 +784,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 4px 2px 0;
+  padding: 2px 2px 0;
 }
 
 .pagination-count-label {
