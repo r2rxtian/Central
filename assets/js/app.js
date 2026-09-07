@@ -541,7 +541,7 @@
     });
 
     renderWorkspaces();
-    renderCatalog();
+    renderCatalog(true);
 
     if (wsId !== 'all') {
       const ws = state.workspaces.find(w => w.id === wsId);
@@ -577,7 +577,7 @@
       saveWorkspaces();
       state.activeWorkspaceId = 'all';
       renderWorkspaces();
-      renderCatalog();
+      renderCatalog(true);
       window.showToast(`Workspace "${ws.name}" deleted.`);
     }
   });
@@ -716,7 +716,7 @@
         saveWorkspaces();
         window.closeModal('workspace-modal');
         renderWorkspaces();
-        renderCatalog();
+        renderCatalog(true);
         window.showToast(`Saved workspace "${name}"!`);
       };
     }
@@ -755,7 +755,9 @@
     return list;
   }
 
-  function renderCatalog() {
+  let isInitialCatalogLoad = true;
+
+  function renderCatalog(animateTransition = false) {
     const grid = document.getElementById('apps-grid-container');
     const countLabel = document.getElementById('pagination-count-label');
     const prevBtn = document.getElementById('pagination-prev-btn');
@@ -794,9 +796,9 @@
     grid.innerHTML = '';
     if (pagedApps.length === 0) {
       grid.innerHTML = `
-        <div style="grid-column: 1 / -1; padding: 48px 20px; text-align: center; color: #8295b3; background: #12192c; border-radius: 12px; border: 1px dashed rgba(255,255,255,0.1);">
-          <div style="font-size: 1.1rem; font-weight: 600; color: #cbd5e1; margin-bottom: 4px;">No applications found</div>
-          <div style="font-size: 0.82rem;">Try adjusting your search keywords or switching category filters.</div>
+        <div style="grid-column: 1 / -1; padding: 48px 20px; text-align: center; color: #8295b3; background: var(--bg-card); border-radius: 12px; border: 1px dashed var(--border-card);">
+          <div style="font-size: 1.1rem; font-weight: 600; color: var(--text-main); margin-bottom: 4px;">No applications found</div>
+          <div style="font-size: 0.82rem; color: var(--text-secondary);">Try adjusting your search keywords or switching category filters.</div>
           <button class="btn-secondary" onclick="window.resetCatalogFilters()" style="margin-top: 14px; font-size: 0.8rem;">Reset Filters</button>
         </div>
       `;
@@ -860,11 +862,19 @@
         dot.title = `Page ${p}`;
         dot.addEventListener('click', () => {
           state.currentPage = p;
-          renderCatalog();
+          renderCatalog(true);
         });
         dotsGroup.appendChild(dot);
       }
     }
+
+    // Only animate catalog cards during user interactions to prevent initial-load visibility conflict
+    if (!isInitialCatalogLoad && animateTransition) {
+      if (typeof window.animateCatalogCards === 'function') {
+        window.animateCatalogCards();
+      }
+    }
+    isInitialCatalogLoad = false;
   }
 
   // Reset Filters Helper
@@ -880,14 +890,14 @@
       else btn.classList.remove('active');
     });
 
-    renderCatalog();
+    renderCatalog(true);
   };
 
   // Pagination Next & Prev Button Handlers
   document.getElementById('pagination-prev-btn')?.addEventListener('click', () => {
     if (state.currentPage > 1) {
       state.currentPage--;
-      renderCatalog();
+      renderCatalog(true);
     }
   });
 
@@ -896,7 +906,7 @@
     const totalPages = Math.ceil(filtered.length / state.itemsPerPage);
     if (state.currentPage < totalPages) {
       state.currentPage++;
-      renderCatalog();
+      renderCatalog(true);
     }
   });
 
@@ -923,7 +933,7 @@
       if (moreLabel) moreLabel.textContent = 'More';
 
       closeMoreDropdown();
-      renderCatalog();
+      renderCatalog(true);
     });
   });
 
@@ -965,7 +975,7 @@
       this.classList.add('active');
 
       closeMoreDropdown();
-      renderCatalog();
+      renderCatalog(true);
     });
   });
 
@@ -980,7 +990,7 @@
     state.searchQuery = q;
     state.currentPage = 1;
 
-    renderCatalog();
+    renderCatalog(true);
     renderSearchDropdown(q);
   });
 
@@ -1183,6 +1193,9 @@
       localStorage.setItem(STORAGE_THEME_KEY, theme);
     } catch (e) {}
     updateThemeUI(theme);
+    if (typeof window.animateThemeToggle === 'function' && showNotice) {
+      window.animateThemeToggle(theme);
+    }
     if (showNotice) {
       window.showToast(theme === 'light' ? 'Light mode activated' : 'Dark mode activated');
     }

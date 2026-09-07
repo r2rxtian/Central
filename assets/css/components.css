@@ -393,7 +393,9 @@
   align-items: center;
   gap: 12px;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  transform-style: preserve-3d;
+  will-change: transform;
   box-shadow: var(--shadow-sm);
   min-height: 74px;
   height: auto;
@@ -405,7 +407,6 @@
 .fav-card:hover {
   background: var(--bg-card-hover);
   border-color: var(--border-card-hover);
-  transform: translateY(-2px);
   box-shadow: var(--shadow-card-hover);
 }
 
@@ -657,7 +658,9 @@
   align-items: center;
   gap: 12px;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  transform-style: preserve-3d;
+  will-change: transform;
   box-shadow: var(--shadow-sm);
   min-height: 74px;
   height: auto;
@@ -669,7 +672,6 @@
 .app-catalog-card:hover {
   background: var(--bg-card-hover);
   border-color: var(--border-card-hover);
-  transform: translateY(-2px);
   box-shadow: var(--shadow-card-hover);
 }
 
@@ -865,7 +867,7 @@
    5. Right Sidebar Panels (~26% Width)
    ========================================================================== */
 
-/* Date & Time Widget */
+/* Date & Time Widget with 3D Interactive Weather */
 .widget-datetime-card {
   position: relative;
   background: var(--bg-card);
@@ -875,25 +877,46 @@
   overflow: hidden;
   box-shadow: var(--shadow-card);
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: space-between;
   box-sizing: border-box;
-  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+  min-height: 205px;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.widget-datetime-card::before {
-  content: '';
+/* 3D WebGL Weather Simulation Viewport */
+.weather-3d-viewport {
   position: absolute;
-  top: -20px;
-  right: -20px;
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.06) 0%, transparent 70%);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 58%;
   pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.2) 12%, rgba(0,0,0,0.85) 45%, #000 80%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.2) 12%, rgba(0,0,0,0.85) 45%, #000 80%);
+}
+
+#weather-3d-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.weather-glass-reflection {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.2) 0%, transparent 60%);
 }
 
 .datetime-info-col {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
 }
@@ -910,52 +933,107 @@
   color: var(--text-main);
   letter-spacing: -0.03em;
   line-height: 1.15;
-  margin: 4px 0;
+  margin: 3px 0 6px;
 }
 
-.datetime-greeting {
+/* Live Weather Status Badge */
+.weather-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
   font-size: 0.8rem;
-  color: var(--text-secondary);
+  font-weight: 600;
+  color: var(--text-main);
+  width: fit-content;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: all var(--transition-fast);
 }
 
-.datetime-sun-art {
-  position: relative;
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  background: #fffbeb;
-  border: 1px solid #fef3c7;
+.weather-condition-icon {
+  font-size: 0.95rem;
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: #f59e0b;
-  box-shadow: 0 2px 6px rgba(245, 158, 11, 0.15);
 }
 
-.sun-ambient-rings {
-  display: none;
+.weather-temp {
+  font-weight: 700;
+  color: var(--text-main);
 }
 
-[data-theme="dark"] .datetime-sun-art {
-  background: transparent;
-  border: none;
-  color: #c084fc;
-  box-shadow: none;
+.weather-dot {
+  color: var(--text-muted);
+  font-size: 0.7rem;
 }
 
-[data-theme="dark"] .sun-ambient-rings {
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border: 1px dashed rgba(192, 132, 252, 0.2);
-  animation: rotateSlow 24s linear infinite;
+.weather-condition-label {
+  color: var(--text-secondary);
+  font-size: 0.76rem;
 }
 
-@keyframes rotateSlow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.weather-location-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+.weather-loc-icon {
+  display: flex;
+  align-items: center;
+  color: var(--color-primary);
+}
+
+/* 3D Weather Simulation Mode Selector */
+.weather-mode-selector {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.weather-mode-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.weather-mode-pill:hover {
+  background: var(--bg-input);
+  color: var(--text-main);
+  border-color: var(--border-card-hover);
+  transform: translateY(-1px);
+}
+
+.weather-mode-pill.active {
+  background: var(--color-primary);
+  color: #ffffff;
+  border-color: var(--color-primary);
+  box-shadow: 0 2px 6px rgba(124, 58, 237, 0.3);
+}
+
+[data-theme="dark"] .weather-mode-pill.active {
+  background: #bf96fc;
+  color: #221244;
+  border-color: #bf96fc;
 }
 
 /* Company Information Panel */
@@ -1237,7 +1315,9 @@
   color: var(--text-main);
   font-size: 0.82rem;
   font-weight: 600;
-  transition: all var(--transition-fast);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast), color var(--transition-fast);
+  transform-style: preserve-3d;
+  will-change: transform;
   height: 44px;
   box-shadow: var(--shadow-sm);
 }
@@ -1246,7 +1326,6 @@
   background: var(--bg-input);
   border-color: var(--border-card-hover);
   color: var(--color-primary);
-  transform: translateY(-1px);
 }
 
 .quicklink-left {

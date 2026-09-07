@@ -5,18 +5,39 @@
  */
 ?>
 <aside class="dashboard-side-col">
-  <!-- 1. Date & Time Widget with Live Digital Clock -->
-  <div class="widget-datetime-card">
+  <!-- 1. Date, Time & 3D Interactive Weather Widget -->
+  <div class="widget-datetime-card" id="widget-datetime-card">
+    <!-- 3D WebGL Weather Simulation Canvas (Three.js 3D Rain, Sun, Storm, Clouds) -->
+    <div class="weather-3d-viewport" id="weather-3d-viewport">
+      <canvas id="weather-3d-canvas"></canvas>
+      <div class="weather-glass-reflection"></div>
+    </div>
+
+    <!-- Foreground Content Layer -->
     <div class="datetime-info-col">
       <span class="datetime-day-date" id="live-date-display">Monday, Sep 7, 2026</span>
       <span class="datetime-digital-clock" id="live-clock-display">11:17 AM</span>
-      <span class="datetime-greeting">Have a productive day!</span>
-    </div>
-    
-    <!-- Stylized Sun Icon with ambient concentric glowing rings -->
-    <div class="datetime-sun-art" title="Weather: Clear Skies">
-      <div class="sun-ambient-rings"></div>
-      <?= renderIcon('sun', '', 28) ?>
+      
+      <!-- Live Weather Condition Tag & Location -->
+      <div class="weather-status-badge" id="weather-status-badge">
+        <span class="weather-condition-icon" id="weather-condition-icon">🌧️</span>
+        <span class="weather-temp" id="weather-temp-display">27°C</span>
+        <span class="weather-dot">•</span>
+        <span class="weather-condition-label" id="weather-condition-label">3D Rain Simulation</span>
+      </div>
+
+      <div class="weather-location-row">
+        <span class="weather-loc-icon"><?= renderIcon('map-pin', '', 11) ?></span>
+        <span class="weather-loc-name">Carmona, Cavite</span>
+      </div>
+
+      <!-- Quick 3D Weather Switcher -->
+      <div class="weather-mode-selector" id="weather-mode-selector" title="Switch 3D Simulation">
+        <button class="weather-mode-pill active" data-weather="rain" title="3D Rain Simulation">🌧️ Rain (3D)</button>
+        <button class="weather-mode-pill" data-weather="sun" title="3D Sun Simulation">☀️ Sun</button>
+        <button class="weather-mode-pill" data-weather="storm" title="3D Storm & Lightning">⛈️ Storm</button>
+        <button class="weather-mode-pill" data-weather="clouds" title="3D Volumetric Clouds">⛅ Clouds</button>
+      </div>
     </div>
   </div>
 

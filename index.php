@@ -74,8 +74,18 @@ require_once __DIR__ . '/components/icons.php';
     };
   </script>
 
+  <!-- Animation & 3D WebGL Vendor Libraries (Offline Local) -->
+  <script src="assets/js/vendor/gsap.min.js"></script>
+  <script src="assets/js/vendor/three.min.js"></script>
+
   <!-- Application Interaction Logic -->
   <script src="assets/js/app.js"></script>
+
+  <!-- 3D Interactive Weather Simulation (Three.js 3D Rain, Sun, Storm, Clouds) -->
+  <script src="assets/js/weather_3d.js"></script>
+
+  <!-- iOS-Level Fluid GSAP Animations & Physics -->
+  <script src="assets/js/animations.js"></script>
 
 </body>
 </html>
