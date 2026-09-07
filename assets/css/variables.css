@@ -1,0 +1,127 @@
+/* CentralPoint Design System Variables - Dynamic Light / Dark Mode Tokens */
+
+:root {
+  /* ==========================================================================
+     Default Theme: Light Mode (1:1 Reference Mockup)
+     ========================================================================== */
+  --bg-body: #f8fafc;
+  --bg-page: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-card-alt: #ffffff;
+  --bg-card-hover: #f8fafc;
+  --bg-input: #f1f5f9;
+  --bg-badge: #f1f5f9;
+  --bg-pill: #ffffff;
+  --bg-pill-hover: #f1f5f9;
+
+  /* Card Outlines & Dividers */
+  --border-card: #e2e8f0;
+  --border-subtle: #e2e8f0;
+  --border-card-hover: #cbd5e1;
+  --border-active: #7c3aed;
+  --border-pill: #e2e8f0;
+
+  /* Typography Colors */
+  --text-white: #ffffff;
+  --text-main: #0f172a;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --text-dim: #cbd5e1;
+  --text-pink: #db2777;
+  --text-purple: #7c3aed;
+  --text-lavender: #a855f7;
+
+  /* Accent Highlights */
+  --color-primary: #7c3aed;
+  --color-primary-light: #8b5cf6;
+  --color-pink: #ec4899;
+  --color-pink-light: #fbcfe8;
+  --color-purple-dark: #5b21b6;
+  --color-indigo: #6366f1;
+  --color-cyan: #0284c7;
+  --color-teal: #0d9488;
+  --color-green: #059669;
+  --color-orange: #ea580c;
+  --color-star: #f59e0b;
+
+  /* Gradients */
+  --grad-primary: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+  --grad-pill-active: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+  --grad-hero: linear-gradient(135deg, #181332 0%, #251845 50%, #15102a 100%);
+  --grad-avatar: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-card-hover: 0 8px 24px -4px rgba(0, 0, 0, 0.08), 0 4px 8px -2px rgba(0, 0, 0, 0.03);
+  --shadow-pill-active: 0 2px 8px rgba(124, 58, 237, 0.28);
+  --shadow-dropdown: 0 12px 30px -4px rgba(0, 0, 0, 0.12), 0 4px 10px -2px rgba(0, 0, 0, 0.05);
+
+  /* Layout Constants */
+  --container-max: 100%;
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-pill: 9999px;
+  --transition-fast: 0.16s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.24s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   Dark Mode Theme: Refined Slate Corporate Dark Theme
+   ========================================================================== */
+[data-theme="dark"] {
+  --bg-body: #0c101d;
+  --bg-page: #0c101d;
+  --bg-card: #131c30;
+  --bg-card-alt: #162138;
+  --bg-card-hover: #192540;
+  --bg-input: #0e1526;
+  --bg-badge: #172138;
+  --bg-pill: #151e34;
+  --bg-pill-hover: #1c2847;
+
+  /* Card Outlines & Dividers */
+  --border-card: rgba(255, 255, 255, 0.06);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-card-hover: rgba(255, 255, 255, 0.14);
+  --border-active: rgba(191, 150, 252, 0.35);
+  --border-pill: rgba(255, 255, 255, 0.08);
+
+  /* Typography Colors */
+  --text-white: #ffffff;
+  --text-main: #ffffff;
+  --text-secondary: #94a3b8;
+  --text-muted: #8295b2;
+  --text-dim: #64748b;
+  --text-pink: #f472b6;
+  --text-purple: #c084fc;
+  --text-lavender: #d8b4fe;
+
+  /* Accent Highlights */
+  --color-primary: #8b5cf6;
+  --color-primary-light: #c084fc;
+  --color-pink: #f472b6;
+  --color-pink-light: #fbcfe8;
+  --color-purple-dark: #5b21b6;
+  --color-indigo: #6366f1;
+  --color-cyan: #38bdf8;
+  --color-teal: #14b8a6;
+  --color-green: #10b981;
+  --color-orange: #f97316;
+  --color-star: #fbbf24;
+
+  /* Gradients */
+  --grad-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  --grad-pill-active: linear-gradient(135deg, #c4a5f8 0%, #b392f0 100%);
+  --grad-hero: linear-gradient(135deg, #13172b 0%, #171d33 50%, #111526 100%);
+  --grad-avatar: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-card: 0 8px 24px -4px rgba(0, 0, 0, 0.5);
+  --shadow-card-hover: 0 10px 24px -4px rgba(0, 0, 0, 0.55);
+  --shadow-pill-active: 0 2px 8px rgba(191, 150, 252, 0.28);
+  --shadow-dropdown: 0 16px 36px rgba(0, 0, 0, 0.7);
+}

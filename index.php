@@ -1,0 +1,81 @@
+<?php
+/**
+ * CentralPoint Employee Portal - Master Entrypoint
+ * La Rose Noire Philippines
+ */
+
+require_once __DIR__ . '/data/mock_data.php';
+require_once __DIR__ . '/components/icons.php';
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CentralPoint Employee Portal - Default browser and new tab hub for La Rose Noire Philippines applications, workspaces, announcements, and shortcuts.">
+  <title>CentralPoint - Employee Portal | La Rose Noire Philippines</title>
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+  <div class="app-wrapper">
+    <!-- Top Navigation Header -->
+    <?php include __DIR__ . '/components/header.php'; ?>
+
+    <!-- Main Dashboard Container: Fluid Full-Width -->
+    <main class="dashboard-container w-full">
+      <div class="dashboard-layout">
+        
+        <!-- Left Main Content Column -->
+        <div class="dashboard-main-col">
+          <!-- Welcome Hero Banner -->
+          <?php include __DIR__ . '/components/welcome_banner.php'; ?>
+
+          <!-- Saved Workspaces Toolbar -->
+          <?php include __DIR__ . '/components/workspace_bar.php'; ?>
+
+          <!-- Favorite Apps Section -->
+          <?php include __DIR__ . '/components/favorite_apps.php'; ?>
+
+          <!-- All Applications Catalog Section -->
+          <?php include __DIR__ . '/components/application_catalog.php'; ?>
+        </div>
+
+        <!-- Right Side Column (Date/Time, Company Info, Announcements, Quick Links) -->
+        <?php include __DIR__ . '/components/company_sidebar.php'; ?>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <?php include __DIR__ . '/components/footer.php'; ?>
+  </div>
+
+  <!-- Interactive Overlays & Modals -->
+  <?php include __DIR__ . '/components/modals.php'; ?>
+
+  <!-- Hydrate Client-Side Mock Data -->
+  <script>
+    window.CP_DATA = {
+      currentUser: <?= json_encode($currentUser) ?>,
+      companyInfo: <?= json_encode($companyInfo) ?>,
+      categories: <?= json_encode($categories) ?>,
+      applications: <?= json_encode($applications) ?>,
+      announcements: <?= json_encode($announcements) ?>,
+      quickLinks: <?= json_encode($quickLinks) ?>,
+      defaultFavoriteIds: <?= json_encode($defaultFavoriteIds) ?>,
+      initialWorkspaces: <?= json_encode($initialWorkspaces) ?>
+    };
+  </script>
+
+  <!-- Application Interaction Logic -->
+  <script src="assets/js/app.js"></script>
+
+</body>
+</html>
