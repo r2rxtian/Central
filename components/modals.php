@@ -97,7 +97,7 @@
       <div style="background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.25); border-radius: 8px; padding: 12px; display: flex; align-items: center; gap: 10px;">
         <span style="color: #22c55e; font-size: 1.1rem;">✓</span>
         <div style="font-size: 0.8rem; color: #cbd5e1;">
-          <strong>Single Sign-On (SSO) Active</strong>: Verified as Juan Dela Cruz (Quality Assurance)
+          <strong>Corporate Portal Access</strong>: Instant access for all La Rose Noire team members
         </div>
       </div>
 

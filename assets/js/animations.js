@@ -271,19 +271,21 @@
   // 6. Modal Sheets & Dialogs iOS Pop-in Physics (Snappy)
   // ==========================================================================
   function enhanceModalAnimations() {
-    const origOpenModal = window.launchApp;
-    window.launchApp = function (appId) {
-      origOpenModal(appId);
-      const modal = document.getElementById('app-launch-modal');
-      const win = modal?.querySelector('.modal-window');
-      if (modal && win) {
-        gsap.fromTo(modal, { opacity: 0 }, { opacity: 1, duration: 0.18 });
-        gsap.fromTo(win,
-          { scale: 0.92, y: 22, opacity: 0 },
-          { scale: 1, y: 0, opacity: 1, duration: 0.25, ease: 'back.out(1.25)' }
-        );
-      }
-    };
+    const origOpenDetails = window.openAppDetails;
+    if (origOpenDetails) {
+      window.openAppDetails = function (appId) {
+        origOpenDetails(appId);
+        const modal = document.getElementById('app-launch-modal');
+        const win = modal?.querySelector('.modal-window');
+        if (modal && win) {
+          gsap.fromTo(modal, { opacity: 0 }, { opacity: 1, duration: 0.18 });
+          gsap.fromTo(win,
+            { scale: 0.92, y: 22, opacity: 0 },
+            { scale: 1, y: 0, opacity: 1, duration: 0.25, ease: 'back.out(1.25)' }
+          );
+        }
+      };
+    }
   }
 
   // ==========================================================================

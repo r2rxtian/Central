@@ -76,17 +76,6 @@
         <?= renderIcon('grid-9', '', 19) ?>
       </button>
 
-      <!-- User Profile Badge -->
-      <div class="user-profile-btn" id="user-profile-btn" title="Logged in as <?= htmlspecialchars($currentUser['name']) ?>">
-        <div class="user-avatar-circle" style="background: <?= $currentUser['avatarGradient'] ?>;">
-          <?= htmlspecialchars($currentUser['initials']) ?>
-        </div>
-        <div class="user-info-text">
-          <span class="user-name"><?= htmlspecialchars($currentUser['name']) ?></span>
-          <span class="user-role"><?= htmlspecialchars($currentUser['role']) ?></span>
-        </div>
-        <span class="user-dropdown-chevron"><?= renderIcon('chevron-down', '', 14) ?></span>
-      </div>
     </div>
   </div>
 </header>

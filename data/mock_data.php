@@ -56,14 +56,14 @@ $applications = [
         'keywords' => 'QR Task Check'
     ],
     [
-        'id' => 'people-navee',
-        'name' => 'People Navee',
+        'id' => 'FB',
+        'name' => 'Facebook',
         'category' => 'hr',
         'categoryLabel' => 'HR',
         'department' => 'Human Resources',
         'icon' => 'users',
-        'iconColor' => 'purple',
-        'url' => 'https://navee.larosenoire.ph',
+        'iconColor' => 'blue',
+        'url' => 'https://www.facebook.com/',
         'description' => 'Core Human Resources Information System for employee records, onboarding, and self-service.',
         'keywords' => 'hr hris staff profile employees directory navee people payroll leaves'
     ],

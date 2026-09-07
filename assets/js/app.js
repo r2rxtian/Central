@@ -204,9 +204,17 @@
   }
 
   // ==========================================================================
-  // Application Launch & Modal Dialogs
+  // Application Launch & Navigation
   // ==========================================================================
   window.launchApp = function (appId) {
+    const app = getAppById(appId);
+    if (!app || !app.url) return;
+
+    // Direct, instant navigation to the application URL in a new tab
+    window.open(app.url, '_blank', 'noopener,noreferrer');
+  };
+
+  window.openAppDetails = function (appId) {
     const app = getAppById(appId);
     if (!app) return;
 
@@ -303,7 +311,7 @@
 
   document.getElementById('ctx-details-btn')?.addEventListener('click', function () {
     if (state.contextMenuAppId) {
-      window.launchApp(state.contextMenuAppId);
+      window.openAppDetails(state.contextMenuAppId);
       closeContextMenu();
     }
   });
@@ -1168,9 +1176,6 @@
     window.showToast('Quick App Drawer opened.');
   });
 
-  document.getElementById('user-profile-btn')?.addEventListener('click', () => {
-    window.showToast(`Logged in as Juan Dela Cruz (${state.currentUser.department || 'Employee'})`);
-  });
 
   // ==========================================================================
   // Light / Dark Mode Theme Controller
