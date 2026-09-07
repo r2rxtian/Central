@@ -523,12 +523,14 @@
   background: var(--bg-card);
   border: 1px solid var(--border-card);
   border-radius: var(--radius-lg);
-  padding: 13px 24px 12px;
+  padding: 16px 24px 14px;
   box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  justify-content: space-between;
+  gap: 12px;
   width: 100%;
+  flex: 1;
   box-sizing: border-box;
   transition: background-color var(--transition-fast), border-color var(--transition-fast);
 }
@@ -643,7 +645,6 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
-  min-height: 130px;
   width: 100%;
 }
 

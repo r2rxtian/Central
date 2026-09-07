@@ -24,7 +24,7 @@
     activeCategory: 'all',
     searchQuery: '',
     currentPage: 1,
-    itemsPerPage: 12,
+    itemsPerPage: 16,
     isEditFavorites: false,
     activeAnnouncementIdx: 0,
     contextMenuAppId: null,

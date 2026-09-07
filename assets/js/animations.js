@@ -80,14 +80,16 @@
       ease: 'power3.out'
     }, '-=0.2');
 
-    tl.from('.category-pill-btn', {
-      y: 8,
-      opacity: 0,
-      scale: 0.95,
-      stagger: 0.015,
-      duration: 0.24,
-      ease: 'power2.out'
-    }, '-=0.22');
+    if (document.querySelector('.category-pill-btn')) {
+      tl.from('.category-pill-btn', {
+        y: 8,
+        opacity: 0,
+        scale: 0.95,
+        stagger: 0.015,
+        duration: 0.24,
+        ease: 'power2.out'
+      }, '-=0.22');
+    }
 
     // 7. Right Sidebar Widgets: Snappy slide-in
     tl.from('.dashboard-side-col > *', {
