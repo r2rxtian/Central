@@ -1178,12 +1178,18 @@
     document.documentElement.setAttribute('data-theme', theme);
     const iconSlot = document.getElementById('theme-icon-slot');
     const toggleBtn = document.getElementById('theme-toggle-btn');
+    const thumb = document.getElementById('theme-switch-thumb');
+
     if (iconSlot) {
-      iconSlot.innerHTML = theme === 'light' ? getIconSvg('moon', 18) : getIconSvg('sun', 18);
+      iconSlot.innerHTML = theme === 'light' ? getIconSvg('sun', 13) : getIconSvg('moon', 13);
     }
     if (toggleBtn) {
       toggleBtn.title = theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode';
       toggleBtn.setAttribute('aria-label', toggleBtn.title);
+      toggleBtn.setAttribute('aria-checked', theme === 'dark' ? 'true' : 'false');
+    }
+    if (thumb && typeof gsap !== 'undefined') {
+      gsap.set(thumb, { x: theme === 'dark' ? 30 : 0 });
     }
   }
 

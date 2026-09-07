@@ -16,6 +16,18 @@ require_once __DIR__ . '/components/icons.php';
   <title>CentralPoint - Employee Portal | La Rose Noire Philippines</title>
   <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
 
+  <!-- Immediate Theme State (Anti-FOUT) -->
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('centralpoint_theme_v1');
+        if (t === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
+
   <!-- Core Stylesheets -->
   <link rel="stylesheet" href="assets/css/variables.css">
   <link rel="stylesheet" href="assets/css/main.css">

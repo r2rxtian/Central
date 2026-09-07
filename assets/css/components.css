@@ -16,8 +16,8 @@
 }
 
 [data-theme="dark"] .hero-banner {
-  background: linear-gradient(135deg, #13172b 0%, #171d33 50%, #111526 100%);
-  border-color: rgba(255, 255, 255, 0.07);
+  background: linear-gradient(135deg, #1c2538 0%, #26334a 50%, #1e273b 100%);
+  border-color: rgba(255, 255, 255, 0.09);
 }
 
 /* 1. Background Facility Photo Layer: Seamless horizontal gradient fade */
@@ -55,12 +55,12 @@
 
 [data-theme="dark"] .hero-gradient-overlay {
   background: linear-gradient(to right,
-    #13172b 0%,
-    rgba(19, 23, 43, 0.96) 38%,
-    rgba(19, 23, 43, 0.35) 62%,
+    #1c2538 0%,
+    rgba(28, 37, 56, 0.96) 38%,
+    rgba(28, 37, 56, 0.35) 62%,
     transparent 85%
   ),
-  linear-gradient(to top, rgba(17, 21, 38, 0.45) 0%, transparent 30%);
+  linear-gradient(to top, rgba(24, 32, 49, 0.45) 0%, transparent 30%);
 }
 
 /* 3. Scripted Text: Floating directly over the soft transition zone */
@@ -385,7 +385,7 @@
 
 .fav-card {
   position: relative;
-  background: var(--bg-card);
+  background: var(--bg-card-alt);
   border: 1px solid var(--border-card);
   border-radius: var(--radius-md);
   padding: 14px 16px;
@@ -650,7 +650,7 @@
 /* Chunky Inner App Card */
 .app-catalog-card {
   position: relative;
-  background: var(--bg-card);
+  background: var(--bg-card-alt);
   border: 1px solid var(--border-card);
   border-radius: var(--radius-md);
   padding: 14px 16px;
@@ -1157,7 +1157,7 @@
   display: flex;
   gap: 12px;
   align-items: center;
-  background: var(--bg-card);
+  background: var(--bg-card-alt);
   border: 1px solid var(--border-card);
   border-radius: var(--radius-sm);
   padding: 12px 14px;
@@ -1167,7 +1167,7 @@
 }
 
 .announcement-slide-box:hover {
-  background: var(--bg-input);
+  background: var(--bg-card-hover);
   border-color: var(--border-card-hover);
 }
 
@@ -1309,7 +1309,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 14px;
-  background: var(--bg-card);
+  background: var(--bg-card-alt);
   border: 1px solid var(--border-card);
   border-radius: var(--radius-sm);
   color: var(--text-main);
@@ -1323,7 +1323,7 @@
 }
 
 .quicklink-tile-btn:hover {
-  background: var(--bg-input);
+  background: var(--bg-card-hover);
   border-color: var(--border-card-hover);
   color: var(--color-primary);
 }
@@ -1376,7 +1376,7 @@
 }
 
 [data-theme="dark"] .modal-overlay {
-  background: rgba(4, 7, 15, 0.75);
+  background: rgba(15, 20, 32, 0.65);
 }
 
 .modal-overlay.open {

@@ -225,23 +225,42 @@
   };
 
   // ==========================================================================
-  // 5. Fluid Theme Switcher 360° Spin (Snappy)
+  // 5. Fluid Theme Switcher Sliding Thumb & 360° Icon Spin (Snappy Spring Physics)
   // ==========================================================================
   window.animateThemeToggle = function (nextTheme) {
+    const thumb = document.getElementById('theme-switch-thumb');
     const iconSlot = document.getElementById('theme-icon-slot');
-    if (iconSlot) {
+    const targetX = nextTheme === 'dark' ? 30 : 0;
+
+    if (thumb && typeof gsap !== 'undefined') {
+      gsap.killTweensOf(thumb);
+      gsap.timeline()
+        .to(thumb, {
+          x: targetX,
+          duration: 0.34,
+          ease: 'power2.inOut'
+        }, 0)
+        .fromTo(thumb,
+          { scaleX: 1.22, scaleY: 0.88 },
+          { scaleX: 1, scaleY: 1, duration: 0.42, ease: 'elastic.out(1.15, 0.45)' },
+          0.06
+        );
+    }
+
+    if (iconSlot && typeof gsap !== 'undefined') {
+      gsap.killTweensOf(iconSlot);
       gsap.fromTo(iconSlot,
         {
           rotate: nextTheme === 'dark' ? -180 : 180,
-          scale: 0.55,
-          opacity: 0.4
+          scale: 0.35,
+          opacity: 0.2
         },
         {
           rotate: 0,
           scale: 1,
           opacity: 1,
-          duration: 0.35,
-          ease: 'back.out(1.6)',
+          duration: 0.36,
+          ease: 'back.out(1.7)',
           clearProps: 'transform,opacity'
         }
       );

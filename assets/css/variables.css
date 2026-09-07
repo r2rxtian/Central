@@ -69,42 +69,43 @@
 }
 
 /* ==========================================================================
-   Dark Mode Theme: Refined Slate Corporate Dark Theme
+   Dark Mode Theme: Refined Slate Corporate Dark Theme (Soft, Not Too Dark)
    ========================================================================== */
 [data-theme="dark"] {
-  --bg-body: #0c101d;
-  --bg-page: #0c101d;
-  --bg-card: #131c30;
-  --bg-card-alt: #162138;
-  --bg-card-hover: #192540;
-  --bg-input: #0e1526;
-  --bg-badge: #172138;
-  --bg-pill: #151e34;
-  --bg-pill-hover: #1c2847;
+  /* Soothing, balanced corporate dark slate surfaces (comfortably dark, not pitch black) */
+  --bg-body: #161c28;
+  --bg-page: #161c28;
+  --bg-card: #1f2738;
+  --bg-card-alt: #253147;
+  --bg-card-hover: #2d3b54;
+  --bg-input: #192232;
+  --bg-badge: #263248;
+  --bg-pill: #242f44;
+  --bg-pill-hover: #2e3c56;
 
   /* Card Outlines & Dividers */
-  --border-card: rgba(255, 255, 255, 0.06);
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-card-hover: rgba(255, 255, 255, 0.14);
-  --border-active: rgba(191, 150, 252, 0.35);
-  --border-pill: rgba(255, 255, 255, 0.08);
+  --border-card: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-card-hover: rgba(255, 255, 255, 0.16);
+  --border-active: rgba(168, 85, 247, 0.5);
+  --border-pill: rgba(255, 255, 255, 0.1);
 
   /* Typography Colors */
   --text-white: #ffffff;
-  --text-main: #ffffff;
+  --text-main: #f1f5f9;
   --text-secondary: #94a3b8;
-  --text-muted: #8295b2;
-  --text-dim: #64748b;
+  --text-muted: #7b8ea6;
+  --text-dim: #60728c;
   --text-pink: #f472b6;
   --text-purple: #c084fc;
   --text-lavender: #d8b4fe;
 
   /* Accent Highlights */
   --color-primary: #8b5cf6;
-  --color-primary-light: #c084fc;
+  --color-primary-light: #a78bfa;
   --color-pink: #f472b6;
   --color-pink-light: #fbcfe8;
-  --color-purple-dark: #5b21b6;
+  --color-purple-dark: #6d28d9;
   --color-indigo: #6366f1;
   --color-cyan: #38bdf8;
   --color-teal: #14b8a6;
@@ -113,15 +114,15 @@
   --color-star: #fbbf24;
 
   /* Gradients */
-  --grad-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  --grad-pill-active: linear-gradient(135deg, #c4a5f8 0%, #b392f0 100%);
-  --grad-hero: linear-gradient(135deg, #13172b 0%, #171d33 50%, #111526 100%);
+  --grad-primary: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+  --grad-pill-active: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  --grad-hero: linear-gradient(135deg, #1c2538 0%, #26334a 50%, #1e273b 100%);
   --grad-avatar: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
 
-  /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
-  --shadow-card: 0 8px 24px -4px rgba(0, 0, 0, 0.5);
-  --shadow-card-hover: 0 10px 24px -4px rgba(0, 0, 0, 0.55);
-  --shadow-pill-active: 0 2px 8px rgba(191, 150, 252, 0.28);
-  --shadow-dropdown: 0 16px 36px rgba(0, 0, 0, 0.7);
+  /* Shadows - Soft ambient depth instead of harsh pitch black */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.18), 0 1px 2px rgba(0, 0, 0, 0.12);
+  --shadow-card: 0 4px 16px -2px rgba(0, 0, 0, 0.22), 0 2px 6px -1px rgba(0, 0, 0, 0.15);
+  --shadow-card-hover: 0 10px 28px -4px rgba(0, 0, 0, 0.32), 0 4px 10px -2px rgba(0, 0, 0, 0.18);
+  --shadow-pill-active: 0 2px 10px rgba(139, 92, 246, 0.35);
+  --shadow-dropdown: 0 16px 36px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.2);
 }

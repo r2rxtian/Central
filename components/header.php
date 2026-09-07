@@ -38,9 +38,31 @@
 
     <!-- Right Controls: Theme Toggle, Notification, Apps Drawer, User Profile -->
     <div class="nav-actions">
-      <!-- Theme Mode Toggle -->
-      <button class="nav-icon-btn" id="theme-toggle-btn" title="Toggle Theme" aria-label="Toggle Theme">
-        <span id="theme-icon-slot"><?= renderIcon('moon', '', 18) ?></span>
+      <!-- High-End Animated Theme Mode Toggle Switch -->
+      <button 
+        class="theme-toggle-switch" 
+        id="theme-toggle-btn" 
+        role="switch" 
+        aria-checked="false" 
+        aria-label="Toggle Dark Mode" 
+        title="Switch to Dark Mode"
+      >
+        <span class="theme-switch-track">
+          <!-- Ambient track icons -->
+          <span class="track-icon track-sun" aria-hidden="true">
+            <?= renderIcon('sun', '', 12) ?>
+          </span>
+          <span class="track-icon track-moon" aria-hidden="true">
+            <?= renderIcon('moon', '', 12) ?>
+          </span>
+          
+          <!-- Animated Sliding Thumb -->
+          <span class="theme-switch-thumb" id="theme-switch-thumb">
+            <span class="thumb-icon-wrap" id="theme-icon-slot">
+              <?= renderIcon('sun', 'thumb-icon', 13) ?>
+            </span>
+          </span>
+        </span>
       </button>
 
       <!-- Notifications -->

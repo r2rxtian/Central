@@ -64,7 +64,7 @@
       label: '3D Rain Simulation',
       loc: 'Carmona, Cavite',
       fogColorLight: 0xdbeafe,
-      fogColorDark: 0x0f172a,
+      fogColorDark: 0x1f2738,
       dirLightColor: 0x93c5fd,
       dirIntensity: 0.9
     },
@@ -74,7 +74,7 @@
       label: '3D Sun Simulation',
       loc: 'Carmona, Cavite',
       fogColorLight: 0xfef3c7,
-      fogColorDark: 0x1f162b,
+      fogColorDark: 0x262238,
       dirLightColor: 0xfbbf24,
       dirIntensity: 1.8
     },
@@ -84,7 +84,7 @@
       label: '3D Storm & Lightning',
       loc: 'Carmona, Cavite',
       fogColorLight: 0x94a3b8,
-      fogColorDark: 0x090d18,
+      fogColorDark: 0x192130,
       dirLightColor: 0x818cf8,
       dirIntensity: 0.6
     },
@@ -94,7 +94,7 @@
       label: '3D Volumetric Clouds',
       loc: 'Carmona, Cavite',
       fogColorLight: 0xe0e7ff,
-      fogColorDark: 0x131c34,
+      fogColorDark: 0x222c40,
       dirLightColor: 0xc7d2fe,
       dirIntensity: 1.2
     }

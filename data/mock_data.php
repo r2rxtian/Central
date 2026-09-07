@@ -44,16 +44,16 @@ $categories = [
 $applications = [
     // Page 1 Top 8 (Ordered exactly as in reference image)
     [
-        'id' => 'lrn-website',
-        'name' => 'LRN Official Website',
-        'category' => 'external',
-        'categoryLabel' => 'External',
-        'department' => 'Corporate Communications',
-        'icon' => 'globe',
-        'iconColor' => 'blue',
-        'url' => 'https://www.larosenoire.ph',
-        'description' => 'Official external corporate website showcasing products, company story, and global distribution.',
-        'keywords' => 'website corporate public portal products bread pastries external'
+        'id' => 'QR_TASK_CHECK',
+        'name' => 'QR Task Check',
+        'category' => 'IT',
+        'categoryLabel' => 'IT Support',
+        'department' => 'Information Technology',
+        'icon' => 'QR',
+        'iconColor' => 'Green',
+        'url' => 'http://10.2.0.8/QRS_new/',
+        'description' => 'QR Task Check is a web-based task management system that allows employees to easily check and manage their tasks.',
+        'keywords' => 'QR Task Check'
     ],
     [
         'id' => 'people-navee',
@@ -142,16 +142,16 @@ $applications = [
 
     // Favorites & Key Apps
     [
-        'id' => 'employee-email',
-        'name' => 'Employee Email',
-        'category' => 'communication',
-        'categoryLabel' => 'Communication',
-        'department' => 'Corporate Communications',
-        'icon' => 'mail',
-        'iconColor' => 'blue',
-        'url' => 'https://mail.larosenoire.ph',
-        'description' => 'Corporate webmail access via Microsoft 365 Exchange.',
-        'keywords' => 'email webmail outlook exchange communication messages inbox'
+        'id' => 'QR_TASK_CHECK',
+        'name' => 'QR Task Check',
+        'category' => 'IT',
+        'categoryLabel' => 'IT Support',
+        'department' => 'Information Technology',
+        'icon' => 'QR',
+        'iconColor' => 'Green',
+        'url' => 'http://10.2.0.8/QRS_new/',
+        'description' => 'QR Task Check is a web-based task management system that allows employees to easily check and manage their tasks.',
+        'keywords' => 'QR Task Check'
     ],
     [
         'id' => 'docusign',
