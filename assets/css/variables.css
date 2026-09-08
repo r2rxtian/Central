@@ -4,22 +4,22 @@
   /* ==========================================================================
      Default Theme: Light Mode (1:1 Reference Mockup)
      ========================================================================== */
-  --bg-body: #f8fafc;
-  --bg-page: #f8fafc;
-  --bg-card: #ffffff;
+  --bg-body: #fcf9fb;
+  --bg-page: #fcf9fb;
+  --bg-card: #FEF1F6;
   --bg-card-alt: #ffffff;
-  --bg-card-hover: #f8fafc;
-  --bg-input: #f1f5f9;
-  --bg-badge: #f1f5f9;
+  --bg-card-hover: #ffffff;
+  --bg-input: #ffffff;
+  --bg-badge: #fde8f1;
   --bg-pill: #ffffff;
-  --bg-pill-hover: #f1f5f9;
+  --bg-pill-hover: #fdf2f7;
 
   /* Card Outlines & Dividers */
-  --border-card: #e2e8f0;
-  --border-subtle: #e2e8f0;
-  --border-card-hover: #cbd5e1;
+  --border-card: #f3d5e2;
+  --border-subtle: #f8e4ee;
+  --border-card-hover: #e8bdcf;
   --border-active: #7c3aed;
-  --border-pill: #e2e8f0;
+  --border-pill: #ecd1dd;
 
   /* Typography Colors */
   --text-white: #ffffff;
@@ -47,7 +47,7 @@
   /* Gradients */
   --grad-primary: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
   --grad-pill-active: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
-  --grad-hero: linear-gradient(135deg, #181332 0%, #251845 50%, #15102a 100%);
+  --grad-hero: linear-gradient(135deg, #FEF1F6 0%, #fde7f1 45%, #fae1ed 100%);
   --grad-avatar: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
 
   /* Shadows */

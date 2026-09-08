@@ -4,13 +4,11 @@
  * All applications, categories, announcements, company details, and quick links
  */
 
-date_default_timezone_set('Asia/Manila');
-
 $currentUser = [
-    'name' => 'Juan Dela Cruz',
+    'name' => 'Arthur Christian David',
     'role' => 'Employee',
-    'initials' => 'JD',
-    'department' => 'Quality Assurance',
+    'initials' => 'ACD',
+    'department' => 'Information Technology ',
     'avatarGradient' => 'linear-gradient(135deg, #a855f7 0%, #6366f1 100%)',
     'unreadNotifications' => 3
 ];
@@ -18,7 +16,7 @@ $currentUser = [
 $companyInfo = [
     'name' => 'La Rose Noire Philippines',
     'tagline' => 'Food Manufacturing • Premium Pastry Solutions',
-    'slogan' => 'Discover a range of Plant-based & Specialty Products that caters a wide range of customers',
+    'slogan' => 'Exceptional Indulgence for a Sweeter Tomorrow.',
     'address' => 'Lot 1-A & B, Clark IE-05 Area, M.A. Roxas Highway,
 Clark Freeport Zone, Philippines',
     'email' => 'office@la-rose-noire.com',
@@ -58,14 +56,14 @@ $applications = [
         'keywords' => 'QR Task Check'
     ],
     [
-        'id' => 'FB',
-        'name' => 'Facebook',
+        'id' => 'people-navee',
+        'name' => 'People Navee',
         'category' => 'hr',
         'categoryLabel' => 'HR',
         'department' => 'Human Resources',
         'icon' => 'users',
-        'iconColor' => 'blue',
-        'url' => 'https://www.facebook.com/',
+        'iconColor' => 'purple',
+        'url' => 'https://navee.larosenoire.ph',
         'description' => 'Core Human Resources Information System for employee records, onboarding, and self-service.',
         'keywords' => 'hr hris staff profile employees directory navee people payroll leaves'
     ],
@@ -748,17 +746,5 @@ $quickLinks = [
         'title' => 'Company Policies',
         'icon' => 'file-text',
         'url' => 'https://policies.larosenoire.ph'
-    ],
-    [
-        'id' => 'qa-audits',
-        'title' => 'QA & Audits',
-        'icon' => 'shield-check',
-        'url' => 'https://qa.larosenoire.ph'
-    ],
-    [
-        'id' => 'events-calendar',
-        'title' => 'Events Calendar',
-        'icon' => 'calendar',
-        'url' => 'https://calendar.larosenoire.ph'
     ]
 ];

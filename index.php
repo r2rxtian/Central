@@ -7,8 +7,11 @@
 require_once __DIR__ . '/data/mock_data.php';
 require_once __DIR__ . '/components/icons.php';
 ?>
+<?php
+$initialThemeAttr = (isset($_GET['theme']) && $_GET['theme'] === 'dark') ? ' data-theme="dark"' : '';
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"<?= $initialThemeAttr ?>>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +24,8 @@ require_once __DIR__ . '/components/icons.php';
     (function() {
       try {
         var t = localStorage.getItem('centralpoint_theme_v1');
-        if (t === 'dark') {
+        var urlDark = window.location.search.indexOf('theme=dark') !== -1;
+        if (t === 'dark' || urlDark) {
           document.documentElement.setAttribute('data-theme', 'dark');
         }
       } catch (e) {}

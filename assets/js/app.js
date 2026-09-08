@@ -1421,7 +1421,12 @@
   function initTheme() {
     let savedTheme = 'light';
     try {
-      savedTheme = localStorage.getItem(STORAGE_THEME_KEY) || 'light';
+      const urlTheme = new URLSearchParams(window.location.search).get('theme');
+      if (urlTheme === 'dark' || urlTheme === 'light') {
+        savedTheme = urlTheme;
+      } else {
+        savedTheme = localStorage.getItem(STORAGE_THEME_KEY) || 'light';
+      }
     } catch (e) {
       savedTheme = 'light';
     }
