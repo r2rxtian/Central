@@ -15,6 +15,36 @@
         <span class="section-subheading" id="catalog-subheading">Browse and launch all 48 company applications.</span>
       </div>
     </div>
+
+    <div class="catalog-filter-wrap" id="catalog-filter-wrap">
+      <button
+        type="button"
+        class="catalog-filter-btn"
+        id="catalog-filter-btn"
+        aria-label="Filter applications by category"
+        aria-expanded="false"
+        aria-controls="catalog-filter-menu"
+      >
+        <span class="catalog-filter-icon"><?= renderIcon('filter', '', 14) ?></span>
+        <span id="catalog-filter-label">All apps</span>
+        <span class="catalog-filter-chevron"><?= renderIcon('chevron-down', '', 11) ?></span>
+      </button>
+
+      <div class="catalog-filter-menu" id="catalog-filter-menu" role="menu">
+        <?php foreach ($categories as $categoryId => $category): ?>
+          <button
+            type="button"
+            class="catalog-filter-option <?= $categoryId === 'all' ? 'active' : '' ?>"
+            data-filter-category="<?= htmlspecialchars($categoryId) ?>"
+            data-filter-label="<?= htmlspecialchars($category['label']) ?>"
+            role="menuitem"
+          >
+            <span><?= htmlspecialchars($category['label']) ?></span>
+            <span class="catalog-filter-check"><?= renderIcon('check', '', 12) ?></span>
+          </button>
+        <?php endforeach; ?>
+      </div>
+    </div>
   </div>
 
   <!-- 4x4 Application Cards Grid (16 cards per page) -->

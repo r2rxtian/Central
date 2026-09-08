@@ -17,12 +17,11 @@ $companyInfo = [
     'name' => 'La Rose Noire Philippines',
     'tagline' => 'Food Manufacturing • Premium Pastry Solutions',
     'slogan' => 'Exceptional Indulgence for a Sweeter Tomorrow.',
-    'address' => 'Lot 1-A & B, Clark IE-05 Area, M.A. Roxas Highway,
-Clark Freeport Zone, Philippines',
+    'address' => 'Lot 1-A & B, Clark IE-05 Area, M.A. Roxas Highway, Clark Freeport Zone, Philippines',
     'email' => 'office@la-rose-noire.com',
-    'phone' => ' +63 45 499-3010',
-    'website' => 'www.larosenoire.ph',
-    'websiteUrl' => 'https://www.larosenoire.ph',
+    'phone' => '+63 45 499-3010',
+    'website' => 'www.la-rose-noire.com',
+    'websiteUrl' => 'https://www.la-rose-noire.com',
     'image' => 'assets/images/lrn-facility-thumb.jpg',
     'heroImage' => 'assets/images/hero-facility-clean.jpg'
 ];

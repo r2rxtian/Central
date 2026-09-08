@@ -19,9 +19,22 @@
       </div>
 
       <div class="company-contact-list">
-        <div class="contact-item-row" title="<?= htmlspecialchars($companyInfo['address']) ?>">
+        <button
+          type="button"
+          class="contact-item-row company-address-trigger"
+          aria-label="Show full company address"
+          aria-describedby="company-address-popover"
+        >
           <span class="contact-item-icon"><?= renderIcon('map-pin', '', 12) ?></span>
           <span class="contact-text-truncate"><?= htmlspecialchars($companyInfo['address']) ?></span>
+        </button>
+
+        <div class="company-address-popover" id="company-address-popover" role="tooltip">
+          <span class="company-address-popover-icon" aria-hidden="true"><?= renderIcon('map-pin', '', 14) ?></span>
+          <span>
+            <strong>Full address</strong>
+            <?= htmlspecialchars($companyInfo['address']) ?>
+          </span>
         </div>
 
         <div class="contact-item-row" title="<?= htmlspecialchars($companyInfo['email']) ?>">

@@ -100,6 +100,15 @@
 }
 
 @media (max-width: 480px) {
+  .catalog-filter-btn {
+    width: 32px;
+    padding: 0;
+    justify-content: center;
+  }
+  #catalog-filter-label,
+  .catalog-filter-chevron {
+    display: none;
+  }
   .apps-grid-container {
     grid-template-columns: 1fr;
   }

@@ -250,6 +250,7 @@
       document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
       closeContextMenu();
       closeMoreDropdown();
+      closeCatalogFilter();
       closeSearchDropdown();
     }
   });
@@ -553,6 +554,7 @@
       if (btn.dataset.category === 'all') btn.classList.add('active');
       else btn.classList.remove('active');
     });
+    syncCatalogFilterUI('all', 'All apps');
 
     renderWorkspaces();
     renderCatalog(true);
@@ -752,7 +754,8 @@
 
     // 2. Filter by Category
     if (state.activeCategory !== 'all') {
-      list = list.filter(app => app.category === state.activeCategory);
+      const activeCategory = state.activeCategory.toLowerCase();
+      list = list.filter(app => (app.category || '').toLowerCase() === activeCategory);
     }
 
     // 3. Filter by Search Query
@@ -904,9 +907,53 @@
       if (btn.dataset.category === 'all') btn.classList.add('active');
       else btn.classList.remove('active');
     });
+    syncCatalogFilterUI('all', 'All apps');
 
     renderCatalog(true);
   };
+
+  // Compact category filter in the All Applications header
+  const catalogFilterWrap = document.getElementById('catalog-filter-wrap');
+  const catalogFilterBtn = document.getElementById('catalog-filter-btn');
+  const catalogFilterMenu = document.getElementById('catalog-filter-menu');
+
+  function closeCatalogFilter() {
+    catalogFilterMenu?.classList.remove('open');
+    catalogFilterBtn?.setAttribute('aria-expanded', 'false');
+  }
+
+  function syncCatalogFilterUI(category, label) {
+    const labelEl = document.getElementById('catalog-filter-label');
+    if (labelEl) labelEl.textContent = label;
+
+    document.querySelectorAll('.catalog-filter-option').forEach(option => {
+      option.classList.toggle('active', option.dataset.filterCategory === category);
+    });
+  }
+
+  catalogFilterBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const willOpen = !catalogFilterMenu?.classList.contains('open');
+    catalogFilterMenu?.classList.toggle('open', willOpen);
+    catalogFilterBtn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+  });
+
+  document.querySelectorAll('.catalog-filter-option').forEach(option => {
+    option.addEventListener('click', () => {
+      const category = option.dataset.filterCategory || 'all';
+      const label = category === 'all' ? 'All apps' : (option.dataset.filterLabel || category);
+
+      state.activeCategory = category;
+      state.currentPage = 1;
+      syncCatalogFilterUI(category, label);
+      closeCatalogFilter();
+      renderCatalog(true);
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#catalog-filter-wrap')) closeCatalogFilter();
+  });
 
   // Pagination Next & Prev Button Handlers
   document.getElementById('pagination-prev-btn')?.addEventListener('click', () => {

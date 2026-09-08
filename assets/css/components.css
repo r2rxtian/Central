@@ -677,6 +677,110 @@
   transition: background-color var(--transition-fast), border-color var(--transition-fast);
 }
 
+.catalog-filter-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.catalog-filter-btn {
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card-alt);
+  box-shadow: var(--shadow-sm);
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.catalog-filter-btn:hover,
+.catalog-filter-btn[aria-expanded="true"] {
+  border-color: var(--border-card-hover);
+  background: var(--bg-input);
+  color: var(--color-primary);
+}
+
+.catalog-filter-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.catalog-filter-icon,
+.catalog-filter-chevron {
+  display: flex;
+  align-items: center;
+}
+
+.catalog-filter-chevron {
+  transition: transform var(--transition-fast);
+}
+
+.catalog-filter-btn[aria-expanded="true"] .catalog-filter-chevron {
+  transform: rotate(180deg);
+}
+
+.catalog-filter-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 160;
+  width: 190px;
+  padding: 5px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-card-alt);
+  box-shadow: var(--shadow-dropdown);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+}
+
+.catalog-filter-menu.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.catalog-filter-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+  border-radius: var(--radius-xs);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.catalog-filter-option:hover,
+.catalog-filter-option.active {
+  background: var(--bg-input);
+  color: var(--color-primary);
+}
+
+.catalog-filter-check {
+  display: flex;
+  opacity: 0;
+}
+
+.catalog-filter-option.active .catalog-filter-check {
+  opacity: 1;
+}
+
 .category-filter-bar {
   display: flex;
   align-items: center;
@@ -1325,6 +1429,7 @@
 }
 
 .company-contact-list {
+  position: relative;
   flex: 1;
   min-width: 0;
   display: flex;
@@ -1338,6 +1443,71 @@
   gap: 9px;
   font-size: 0.76rem;
   color: var(--text-main);
+}
+
+.company-address-trigger {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: help;
+}
+
+.company-address-trigger:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.company-address-popover {
+  position: absolute;
+  top: 18px;
+  right: 0;
+  z-index: 20;
+  width: min(300px, calc(100vw - 48px));
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-card-hover);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card-alt);
+  box-shadow: var(--shadow-dropdown);
+  color: var(--text-main);
+  font-size: 0.74rem;
+  line-height: 1.45;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+}
+
+.company-address-popover strong {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--color-primary);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.company-address-popover-icon {
+  display: flex;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--color-primary);
+}
+
+.company-address-trigger:hover + .company-address-popover,
+.company-address-trigger:focus + .company-address-popover,
+.company-address-popover:hover {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 .contact-text-truncate {
