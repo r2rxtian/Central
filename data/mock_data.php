@@ -40,6 +40,31 @@ $categories = [
     'external' => ['label' => 'External', 'count' => 3, 'icon' => 'globe']
 ];
 
+// Stable department colors used by the accent rail and dot on every app card.
+$categoryAccentColors = [
+    'it' => '#4d9cf8',
+    'hr' => '#ec6f9f',
+    'qa' => '#57ad68',
+    'operations' => '#e59b4b',
+    'finance' => '#c99045',
+    'facilities' => '#4fb3b7',
+    'administration' => '#8b6edb',
+    'communication' => '#55bac7',
+    'external' => '#7b8ba5'
+];
+
+$categoryAccentColorsDark = [
+    'it' => '#607d9f',
+    'hr' => '#936f7b',
+    'qa' => '#66846e',
+    'operations' => '#96745f',
+    'finance' => '#917552',
+    'facilities' => '#5f877f',
+    'administration' => '#806d86',
+    'communication' => '#658491',
+    'external' => '#6f7788'
+];
+
 $applications = [
     // Page 1 Top 8 (Ordered exactly as in reference image)
     [

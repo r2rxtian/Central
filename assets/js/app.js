@@ -24,7 +24,7 @@
     activeCategory: 'all',
     searchQuery: '',
     currentPage: 1,
-    itemsPerPage: 16,
+    itemsPerPage: 20,
     isEditFavorites: false,
     activeAnnouncementIdx: 0,
     contextMenuAppId: null,
@@ -179,6 +179,60 @@
     cyan: '#0ea5e9'
   };
 
+  const ICON_COLORS_LIGHT = {
+    blue: '#60a5fa',
+    purple: '#8b5cf6',
+    teal: '#4fb3b7',
+    pink: '#ec6f9f',
+    green: '#57ad68',
+    Green: '#57ad68',
+    magenta: '#9c6ade',
+    orange: '#c99045',
+    cyan: '#55bac7'
+  };
+
+  const ICON_COLORS_MUTED_DARK = {
+    blue: '#607d9f',
+    purple: '#776d93',
+    teal: '#5f877f',
+    pink: '#936f7b',
+    green: '#66846e',
+    Green: '#66846e',
+    magenta: '#806d86',
+    orange: '#96745f',
+    cyan: '#658491'
+  };
+
+  const CATEGORY_ACCENTS_LIGHT = window.CP_DATA?.categoryAccentColors || {
+    it: '#4d9cf8',
+    hr: '#ec6f9f',
+    qa: '#57ad68',
+    operations: '#e59b4b',
+    finance: '#c99045',
+    facilities: '#4fb3b7',
+    administration: '#8b6edb',
+    communication: '#55bac7',
+    external: '#7b8ba5'
+  };
+
+  const CATEGORY_ACCENTS_DARK = window.CP_DATA?.categoryAccentColorsDark || {
+    it: '#607d9f',
+    hr: '#936f7b',
+    qa: '#66846e',
+    operations: '#96745f',
+    finance: '#917552',
+    facilities: '#5f877f',
+    administration: '#806d86',
+    communication: '#658491',
+    external: '#6f7788'
+  };
+
+  function getCategoryAccent(app, darkMode = false) {
+    const categoryKey = String(app?.category || '').trim().toLowerCase();
+    const palette = darkMode ? CATEGORY_ACCENTS_DARK : CATEGORY_ACCENTS_LIGHT;
+    return palette[categoryKey] || (darkMode ? '#6f7788' : '#7b8ba5');
+  }
+
   // Render SVG Icon (Client-Side generator matching PHP helper)
   function getIconSvg(iconName, size = 18) {
     const icons = {
@@ -251,7 +305,6 @@
       closeContextMenu();
       closeMoreDropdown();
       closeCatalogFilter();
-      closeSearchDropdown();
     }
   });
 
@@ -358,15 +411,12 @@
       const card = document.createElement('div');
       card.className = 'fav-card';
       card.dataset.appId = app.id;
-      const bgColor = ICON_COLORS[app.iconColor] || '#7c3aed';
+      const bgColor = getCategoryAccent(app);
+      const darkBgColor = getCategoryAccent(app, true);
+      card.style.setProperty('--app-accent', bgColor);
+      card.style.setProperty('--app-accent-dark', darkBgColor);
 
       card.innerHTML = `
-        <span class="card-icon-watermark" style="color: ${bgColor};" aria-hidden="true">
-          <span class="card-icon-watermark-glyph">${getIconSvg(app.icon, 82)}</span>
-        </span>
-        <div class="fav-card-icon" style="background-color: ${bgColor};">
-          ${getIconSvg(app.icon, 20)}
-        </div>
         <div class="fav-card-details">
           <div class="fav-card-name" title="${app.name}">${app.name}</div>
           <div class="fav-card-dept">${app.categoryLabel}</div>
@@ -502,10 +552,10 @@
     allTab.className = `workspace-tab-btn ${state.activeWorkspaceId === 'all' ? 'active' : ''}`;
     allTab.dataset.workspaceId = 'all';
     allTab.innerHTML = `
-      <span style="display: flex; align-items: center;">
+      <span class="workspace-tab-icon" aria-hidden="true">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
       </span>
-      <span>All Applications</span>
+      <span class="workspace-tab-label">All Applications</span>
     `;
     allTab.addEventListener('click', () => selectWorkspace('all'));
     tabsGroup.appendChild(allTab);
@@ -520,10 +570,10 @@
       btn.dataset.workspaceId = ws.id;
 
       btn.innerHTML = `
-        <span style="display: flex; align-items: center;">
+        <span class="workspace-tab-icon" aria-hidden="true">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
         </span>
-        <span>${ws.name}</span>
+        <span class="workspace-tab-label" title="${ws.name}">${ws.name}</span>
         ${isDefault ? '<span class="workspace-default-tag">Default</span>' : ''}
       `;
 
@@ -558,13 +608,6 @@
 
     renderWorkspaces();
     renderCatalog(true);
-
-    if (wsId !== 'all') {
-      const ws = state.workspaces.find(w => w.id === wsId);
-      if (ws) {
-        window.showToast(`Loaded workspace: "${ws.name}"`);
-      }
-    }
   }
 
   // Workspace Creation & Editing Modal
@@ -774,6 +817,39 @@
 
   let isInitialCatalogLoad = true;
 
+  function calculateCatalogPageSize() {
+    const grid = document.getElementById('apps-grid-container');
+    if (!grid || grid.clientWidth <= 0 || grid.clientHeight <= 0) {
+      return state.itemsPerPage;
+    }
+
+    const styles = window.getComputedStyle(grid);
+    const columnGap = parseFloat(styles.columnGap) || 14;
+    const rowGap = parseFloat(styles.rowGap) || 14;
+    const minCardWidth = parseFloat(styles.getPropertyValue('--catalog-card-min-width')) || 190;
+    const cardHeight = parseFloat(styles.gridAutoRows) || 74;
+
+    const columns = Math.max(1, Math.floor((grid.clientWidth + columnGap) / (minCardWidth + columnGap)));
+    const completeRows = Math.max(1, Math.floor((grid.clientHeight + rowGap) / (cardHeight + rowGap)));
+
+    return columns * completeRows;
+  }
+
+  function updateCatalogPageSize(preserveFirstVisible = false) {
+    const nextPageSize = calculateCatalogPageSize();
+    if (!Number.isFinite(nextPageSize) || nextPageSize < 1 || nextPageSize === state.itemsPerPage) {
+      return false;
+    }
+
+    const firstVisibleIndex = (state.currentPage - 1) * state.itemsPerPage;
+    state.itemsPerPage = nextPageSize;
+    state.currentPage = preserveFirstVisible
+      ? Math.floor(firstVisibleIndex / nextPageSize) + 1
+      : 1;
+
+    return true;
+  }
+
   function renderCatalog(animateTransition = false) {
     const grid = document.getElementById('apps-grid-container');
     const countLabel = document.getElementById('pagination-count-label');
@@ -809,7 +885,7 @@
       }
     }
 
-    // Render Cards in 2x4 Grid
+    // Render Cards in the responsive 5x4 desktop grid
     grid.innerHTML = '';
     if (pagedApps.length === 0) {
       grid.innerHTML = `
@@ -824,15 +900,12 @@
         const card = document.createElement('div');
         card.className = 'app-catalog-card';
         card.dataset.appId = app.id;
-        const bgColor = ICON_COLORS[app.iconColor] || '#2563eb';
+        const bgColor = getCategoryAccent(app);
+        const darkBgColor = getCategoryAccent(app, true);
+        card.style.setProperty('--app-accent', bgColor);
+        card.style.setProperty('--app-accent-dark', darkBgColor);
 
         card.innerHTML = `
-          <span class="card-icon-watermark" style="color: ${bgColor};" aria-hidden="true">
-            <span class="card-icon-watermark-glyph">${getIconSvg(app.icon, 82)}</span>
-          </span>
-          <div class="app-card-icon-box" style="background-color: ${bgColor};">
-            ${getIconSvg(app.icon, 22)}
-          </div>
           <div class="app-card-details">
             <div class="app-card-name" title="${app.name}">${app.name}</div>
             <div class="app-card-category">${app.categoryLabel}</div>
@@ -900,8 +973,8 @@
     state.activeCategory = 'all';
     state.searchQuery = '';
     state.currentPage = 1;
-    const searchInput = document.getElementById('global-search-input');
-    if (searchInput) searchInput.value = '';
+    const catalogSearchInput = document.getElementById('catalog-search-input');
+    if (catalogSearchInput) catalogSearchInput.value = '';
 
     document.querySelectorAll('.category-pill-btn').forEach(btn => {
       if (btn.dataset.category === 'all') btn.classList.add('active');
@@ -916,6 +989,7 @@
   const catalogFilterWrap = document.getElementById('catalog-filter-wrap');
   const catalogFilterBtn = document.getElementById('catalog-filter-btn');
   const catalogFilterMenu = document.getElementById('catalog-filter-menu');
+  const catalogSearchInput = document.getElementById('catalog-search-input');
 
   function closeCatalogFilter() {
     catalogFilterMenu?.classList.remove('open');
@@ -953,6 +1027,14 @@
 
   document.addEventListener('click', (e) => {
     if (!e.target.closest('#catalog-filter-wrap')) closeCatalogFilter();
+  });
+
+  catalogSearchInput?.addEventListener('input', function () {
+    const query = this.value.trim().toLowerCase();
+    state.searchQuery = query;
+    state.currentPage = 1;
+
+    renderCatalog(true);
   });
 
   // Pagination Next & Prev Button Handlers
@@ -1039,89 +1121,6 @@
       closeMoreDropdown();
       renderCatalog(true);
     });
-  });
-
-  // ==========================================================================
-  // Header Live Search & Shortcut (Ctrl + K)
-  // ==========================================================================
-  const searchInput = document.getElementById('global-search-input');
-  const searchDropdown = document.getElementById('search-results-dropdown');
-
-  searchInput?.addEventListener('input', function () {
-    const q = this.value.trim().toLowerCase();
-    state.searchQuery = q;
-    state.currentPage = 1;
-
-    renderCatalog(true);
-    renderSearchDropdown(q);
-  });
-
-  function renderSearchDropdown(query) {
-    if (!searchDropdown) return;
-    if (!query || query.length < 2) {
-      searchDropdown.classList.remove('active');
-      searchDropdown.innerHTML = '';
-      return;
-    }
-
-    const matched = state.applications.filter(app => {
-      return app.name.toLowerCase().includes(query) ||
-             app.department.toLowerCase().includes(query) ||
-             app.categoryLabel.toLowerCase().includes(query) ||
-             (app.keywords && app.keywords.toLowerCase().includes(query));
-    }).slice(0, 6);
-
-    if (matched.length === 0) {
-      searchDropdown.innerHTML = '<div style="padding: 12px 16px; font-size: 0.82rem; color: #8295b3;">No matching applications found.</div>';
-      searchDropdown.classList.add('active');
-      return;
-    }
-
-    searchDropdown.innerHTML = '';
-    matched.forEach(app => {
-      const item = document.createElement('div');
-      item.className = 'search-result-item';
-      const bgColor = ICON_COLORS[app.iconColor] || '#2563eb';
-
-      item.innerHTML = `
-        <div style="width: 28px; height: 28px; border-radius: 7px; background: ${bgColor}; display: flex; align-items: center; justify-content: center; color: white;">
-          ${getIconSvg(app.icon, 14)}
-        </div>
-        <div class="search-result-info">
-          <div class="search-result-title">${app.name}</div>
-          <div class="search-result-category">${app.department} • ${app.categoryLabel}</div>
-        </div>
-        <div style="font-size: 0.72rem; color: var(--color-primary); font-weight: 600;">Launch ↗</div>
-      `;
-
-      item.addEventListener('click', () => {
-        closeSearchDropdown();
-        window.launchApp(app.id);
-      });
-
-      searchDropdown.appendChild(item);
-    });
-
-    searchDropdown.classList.add('active');
-  }
-
-  function closeSearchDropdown() {
-    searchDropdown?.classList.remove('active');
-  }
-
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.nav-search-wrap')) {
-      closeSearchDropdown();
-    }
-  });
-
-  // Ctrl + K Keyboard Shortcut
-  document.addEventListener('keydown', function (e) {
-    if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
-      e.preventDefault();
-      searchInput?.focus();
-      searchInput?.select();
-    }
   });
 
   // ==========================================================================
@@ -1240,197 +1239,6 @@
   });
 
   // ==========================================================================
-  // Quick App Drawer (9-Dot Launcher Popover)
-  // ==========================================================================
-  const appLauncherBtn = document.getElementById('app-launcher-btn');
-  const appDrawerPopover = document.getElementById('app-drawer-popover');
-  const appDrawerCloseBtn = document.getElementById('app-drawer-close-btn');
-  const appDrawerSearchInput = document.getElementById('app-drawer-search-input');
-  const appDrawerSearchClear = document.getElementById('app-drawer-search-clear');
-  const appDrawerGrid = document.getElementById('app-drawer-grid');
-  const appDrawerCount = document.getElementById('app-drawer-count');
-  const appDrawerViewAll = document.getElementById('app-drawer-view-all');
-
-  let drawerCategory = '3x3';
-  let drawerSearch = '';
-
-  window.refreshAppDrawer = function () {
-    if (appDrawerPopover?.classList.contains('open')) {
-      renderAppDrawer();
-    }
-  };
-
-  function openAppDrawer() {
-    if (!appDrawerPopover) return;
-    appDrawerPopover.classList.add('open');
-    appLauncherBtn?.classList.add('active');
-    appLauncherBtn?.setAttribute('aria-expanded', 'true');
-    appDrawerPopover.setAttribute('aria-hidden', 'false');
-    renderAppDrawer();
-    setTimeout(() => appDrawerSearchInput?.focus(), 50);
-  }
-
-  function closeAppDrawer() {
-    if (!appDrawerPopover) return;
-    appDrawerPopover.classList.remove('open');
-    appLauncherBtn?.classList.remove('active');
-    appLauncherBtn?.setAttribute('aria-expanded', 'false');
-    appDrawerPopover.setAttribute('aria-hidden', 'true');
-  }
-
-  function toggleAppDrawer() {
-    if (appDrawerPopover?.classList.contains('open')) {
-      closeAppDrawer();
-    } else {
-      openAppDrawer();
-    }
-  }
-
-  function renderAppDrawer() {
-    if (!appDrawerGrid) return;
-
-    let filtered = [];
-
-    if (drawerSearch) {
-      const q = drawerSearch.toLowerCase();
-      filtered = state.applications.filter(app => {
-        const matchesName = app.name.toLowerCase().includes(q);
-        const matchesDept = (app.department || '').toLowerCase().includes(q);
-        const matchesCat = (app.categoryLabel || '').toLowerCase().includes(q);
-        const matchesKeywords = (app.keywords || '').toLowerCase().includes(q);
-        return matchesName || matchesDept || matchesCat || matchesKeywords;
-      });
-    } else if (drawerCategory === '3x3' || drawerCategory === 'fav') {
-      // Pinned section + completed 3rd row below for a 3x3 grid (9 apps)
-      const favApps = state.favorites.map(id => getAppById(id)).filter(Boolean);
-      const remainingApps = state.applications.filter(app => !state.favorites.includes(app.id));
-      filtered = [...favApps, ...remainingApps].slice(0, 9);
-    } else if (drawerCategory !== 'all') {
-      filtered = state.applications.filter(app => app.category.toLowerCase() === drawerCategory.toLowerCase());
-    } else {
-      filtered = state.applications;
-    }
-
-    if (appDrawerCount) {
-      appDrawerCount.textContent = filtered.length;
-    }
-
-    appDrawerGrid.innerHTML = '';
-
-    if (filtered.length === 0) {
-      appDrawerGrid.innerHTML = `
-        <div class="app-drawer-empty">
-          <div style="font-size: 1.5rem; margin-bottom: 6px;">🔍</div>
-          <div>No applications found</div>
-          <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">Try another search keyword or category.</div>
-        </div>
-      `;
-      return;
-    }
-
-    filtered.forEach(app => {
-      const tile = document.createElement('div');
-      tile.className = 'app-drawer-tile';
-      tile.dataset.appId = app.id;
-      tile.title = `${app.name} (${app.categoryLabel})`;
-
-      const isFav = state.favorites.includes(app.id);
-      const bgColor = ICON_COLORS[app.iconColor] || '#2563eb';
-
-      tile.innerHTML = `
-        <button class="app-drawer-fav-star ${isFav ? 'active' : ''}" title="${isFav ? 'Remove from favorites' : 'Pin to favorites'}" aria-label="Toggle favorite">
-          ★
-        </button>
-        <div class="app-drawer-tile-icon" style="background-color: ${bgColor};">
-          ${getIconSvg(app.icon, 20)}
-        </div>
-        <div class="app-drawer-tile-name">${app.name}</div>
-        <div class="app-drawer-tile-dept">${app.categoryLabel}</div>
-      `;
-
-      // Tile click -> Instant launch
-      tile.addEventListener('click', (e) => {
-        if (e.target.closest('.app-drawer-fav-star')) return;
-        window.launchApp(app.id);
-        closeAppDrawer();
-      });
-
-      // Star click -> toggle favorite
-      tile.querySelector('.app-drawer-fav-star')?.addEventListener('click', (e) => {
-        e.stopPropagation();
-        window.toggleFavorite(app.id);
-        renderAppDrawer();
-      });
-
-      appDrawerGrid.appendChild(tile);
-    });
-  }
-
-  // App Launcher event listeners
-  appLauncherBtn?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    toggleAppDrawer();
-  });
-
-  appDrawerCloseBtn?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    closeAppDrawer();
-  });
-
-  // Search input in drawer
-  appDrawerSearchInput?.addEventListener('input', (e) => {
-    drawerSearch = e.target.value.trim().toLowerCase();
-    if (appDrawerSearchClear) {
-      appDrawerSearchClear.style.display = drawerSearch ? 'block' : 'none';
-    }
-    renderAppDrawer();
-  });
-
-  appDrawerSearchClear?.addEventListener('click', () => {
-    if (appDrawerSearchInput) {
-      appDrawerSearchInput.value = '';
-      drawerSearch = '';
-      appDrawerSearchClear.style.display = 'none';
-      renderAppDrawer();
-      appDrawerSearchInput.focus();
-    }
-  });
-
-  // Drawer Category Pills
-  document.querySelectorAll('.app-drawer-pill').forEach(pill => {
-    pill.addEventListener('click', () => {
-      document.querySelectorAll('.app-drawer-pill').forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
-      drawerCategory = pill.dataset.drawerCat || 'all';
-      renderAppDrawer();
-    });
-  });
-
-  // Footer "View All 48 Applications" link
-  appDrawerViewAll?.addEventListener('click', () => {
-    closeAppDrawer();
-    const catalog = document.getElementById('catalog-section');
-    if (catalog) {
-      catalog.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  });
-
-  // Close when clicking outside drawer
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('#app-launcher-wrap') && appDrawerPopover?.classList.contains('open')) {
-      closeAppDrawer();
-    }
-  });
-
-  // Close on Escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && appDrawerPopover?.classList.contains('open')) {
-      closeAppDrawer();
-    }
-  });
-
-
-  // ==========================================================================
   // Light / Dark Mode Theme Controller
   // ==========================================================================
   function updateThemeUI(theme) {
@@ -1496,9 +1304,22 @@
     initStorage();
     renderWorkspaces();
     renderFavorites();
+    updateCatalogPageSize(false);
     renderCatalog();
     updateClock();
     setInterval(updateClock, 1000);
+
+    const catalogGrid = document.getElementById('apps-grid-container');
+    if (catalogGrid && typeof ResizeObserver !== 'undefined') {
+      let resizeFrame = null;
+      const catalogResizeObserver = new ResizeObserver(() => {
+        if (resizeFrame) cancelAnimationFrame(resizeFrame);
+        resizeFrame = requestAnimationFrame(() => {
+          if (updateCatalogPageSize(true)) renderCatalog(false);
+        });
+      });
+      catalogResizeObserver.observe(catalogGrid);
+    }
   }
 
   // Run on DOM ready

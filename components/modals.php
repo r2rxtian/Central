@@ -13,35 +13,35 @@
     </div>
     <div class="modal-body">
       <div>
-        <label style="display: block; font-size: 0.82rem; font-weight: 600; color: #94a3b8; margin-bottom: 6px;">
+        <label class="modal-field-label" for="workspace-name-input">
           Workspace Name
         </label>
         <input 
           type="text" 
           id="workspace-name-input" 
           placeholder="e.g. QA Websites, My Daily Tools..." 
-          style="width: 100%; padding: 10px 14px; background: #0c111f; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #ffffff; font-size: 0.9rem;"
+          class="modal-text-input"
         >
       </div>
 
-      <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: #16203a; border-radius: 8px; border: 1px solid rgba(168,85,247,0.2);">
+      <div class="workspace-default-row">
         <div>
-          <div style="font-size: 0.85rem; font-weight: 600; color: #ffffff;">Set as Default Workspace</div>
-          <div style="font-size: 0.74rem; color: #94a3b8;">Automatically loads this group whenever CentralPoint opens.</div>
+          <div class="workspace-default-title">Set as Default Workspace</div>
+          <div class="workspace-default-copy">Automatically loads this group whenever CentralPoint opens.</div>
         </div>
-        <input type="checkbox" id="workspace-is-default-checkbox" style="width: 18px; height: 18px; accent-color: #ec4899; cursor: pointer;">
+        <input type="checkbox" id="workspace-is-default-checkbox" class="workspace-default-checkbox">
       </div>
 
       <div>
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-          <label style="font-size: 0.82rem; font-weight: 600; color: #94a3b8;">
+        <div class="workspace-picker-header">
+          <label class="modal-field-label workspace-picker-label" for="workspace-app-search">
             Select Applications for this Group (<span id="workspace-selected-count">0</span> selected)
           </label>
           <input 
             type="text" 
             id="workspace-app-search" 
             placeholder="Filter apps..." 
-            style="padding: 4px 10px; background: #0c111f; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: #ffffff; font-size: 0.76rem; width: 140px;"
+            class="modal-text-input modal-text-input-compact"
           >
         </div>
         <div id="workspace-apps-checklist" style="max-height: 240px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding-right: 4px;">
@@ -68,7 +68,7 @@
         type="text" 
         id="fav-search-input" 
         placeholder="Search application to add to favorites..." 
-        style="width: 100%; padding: 10px 14px; background: #0c111f; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #ffffff; font-size: 0.9rem;"
+        class="modal-text-input"
       >
       <div id="fav-picker-list" style="max-height: 320px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
         <!-- Populated dynamically -->

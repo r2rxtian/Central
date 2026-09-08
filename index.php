@@ -15,7 +15,7 @@ $initialThemeAttr = (isset($_GET['theme']) && $_GET['theme'] === 'dark') ? ' dat
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="CentralPoint Employee Portal - Default browser and new tab hub for La Rose Noire Philippines applications, workspaces, announcements, and shortcuts.">
+  <meta name="description" content="CentralPoint Employee Portal - Corporate application launcher and new-tab workspace for La Rose Noire Philippines employees.">
   <title>CentralPoint - Employee Portal | La Rose Noire Philippines</title>
   <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
 
@@ -46,28 +46,18 @@ $initialThemeAttr = (isset($_GET['theme']) && $_GET['theme'] === 'dark') ? ' dat
 
     <!-- Main Dashboard Container: Fluid Full-Width -->
     <main class="dashboard-container w-full">
-      <!-- 1. Top Row: Welcome Hero Banner (Left) + Weather & Clock Widget (Right) -->
-      <div class="dashboard-top-row">
-        <?php include __DIR__ . '/components/welcome_banner.php'; ?>
-        <?php include __DIR__ . '/components/weather_widget.php'; ?>
-      </div>
-
-      <!-- 2. Lower Dashboard: Applications (Left) + Shared Unified Container (Right) -->
-      <div class="dashboard-layout">
-        <!-- Left Main Content Column -->
-        <div class="dashboard-main-col">
-          <!-- Favorite Apps Section -->
+      <!-- Compact Top Row: Favorites + Company Information -->
+      <div class="portal-top-row">
+        <div class="portal-favorites-panel">
           <?php include __DIR__ . '/components/favorite_apps.php'; ?>
-
-          <!-- All Applications Catalog Section -->
-          <?php include __DIR__ . '/components/application_catalog.php'; ?>
         </div>
-
-        <!-- Right Side Column: Shared Container (Company Profile, Announcements, Quick Links) -->
         <aside class="dashboard-side-col">
           <?php include __DIR__ . '/components/company_sidebar.php'; ?>
         </aside>
       </div>
+
+      <!-- Full-Width Flexible Application Catalog -->
+      <?php include __DIR__ . '/components/application_catalog.php'; ?>
     </main>
 
     <!-- Footer -->
@@ -83,6 +73,8 @@ $initialThemeAttr = (isset($_GET['theme']) && $_GET['theme'] === 'dark') ? ' dat
       currentUser: <?= json_encode($currentUser) ?>,
       companyInfo: <?= json_encode($companyInfo) ?>,
       categories: <?= json_encode($categories) ?>,
+      categoryAccentColors: <?= json_encode($categoryAccentColors) ?>,
+      categoryAccentColorsDark: <?= json_encode($categoryAccentColorsDark) ?>,
       applications: <?= json_encode($applications) ?>,
       announcements: <?= json_encode($announcements) ?>,
       quickLinks: <?= json_encode($quickLinks) ?>,
@@ -91,15 +83,11 @@ $initialThemeAttr = (isset($_GET['theme']) && $_GET['theme'] === 'dark') ? ' dat
     };
   </script>
 
-  <!-- Animation & 3D WebGL Vendor Libraries (Offline Local) -->
+  <!-- Animation Library (Offline Local) -->
   <script src="assets/js/vendor/gsap.min.js"></script>
-  <script src="assets/js/vendor/three.min.js"></script>
 
   <!-- Application Interaction Logic -->
   <script src="assets/js/app.js"></script>
-
-  <!-- 3D Interactive Weather Simulation (Three.js 3D Rain, Sun, Storm, Clouds) -->
-  <script src="assets/js/weather_3d.js"></script>
 
   <!-- iOS-Level Fluid GSAP Animations & Physics -->
   <script src="assets/js/animations.js"></script>

@@ -4,29 +4,29 @@
   /* ==========================================================================
      Default Theme: Light Mode (1:1 Reference Mockup)
      ========================================================================== */
-  --bg-body: #fcf9fb;
-  --bg-page: #fcf9fb;
-  --bg-card: #FEF1F6;
+  --bg-body: #fbfbff;
+  --bg-page: #fbfbff;
+  --bg-card: #fbfaff;
   --bg-card-alt: #ffffff;
-  --bg-card-hover: #ffffff;
+  --bg-card-hover: #fdfcff;
   --bg-input: #ffffff;
-  --bg-badge: #fde8f1;
+  --bg-badge: #f5f1ff;
   --bg-pill: #ffffff;
-  --bg-pill-hover: #fdf2f7;
+  --bg-pill-hover: #f7f4ff;
 
   /* Card Outlines & Dividers */
-  --border-card: #f3d5e2;
-  --border-subtle: #f8e4ee;
-  --border-card-hover: #e8bdcf;
+  --border-card: #e3e0ec;
+  --border-subtle: #ece9f4;
+  --border-card-hover: #cfc7e1;
   --border-active: #7c3aed;
-  --border-pill: #ecd1dd;
+  --border-pill: #ded9eb;
 
   /* Typography Colors */
   --text-white: #ffffff;
   --text-main: #0f172a;
-  --text-secondary: #64748b;
-  --text-muted: #94a3b8;
-  --text-dim: #cbd5e1;
+  --text-secondary: #667493;
+  --text-muted: #8e9ab4;
+  --text-dim: #c4cad8;
   --text-pink: #db2777;
   --text-purple: #7c3aed;
   --text-lavender: #a855f7;
@@ -51,9 +51,9 @@
   --grad-avatar: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
-  --shadow-card-hover: 0 8px 24px -4px rgba(0, 0, 0, 0.08), 0 4px 8px -2px rgba(0, 0, 0, 0.03);
+  --shadow-sm: 0 2px 5px rgba(67, 55, 108, 0.07);
+  --shadow-card: 0 4px 14px rgba(73, 61, 112, 0.06), 0 1px 3px rgba(73, 61, 112, 0.04);
+  --shadow-card-hover: 0 9px 24px -4px rgba(88, 66, 142, 0.14), 0 3px 8px rgba(73, 61, 112, 0.06);
   --shadow-pill-active: 0 2px 8px rgba(124, 58, 237, 0.28);
   --shadow-dropdown: 0 12px 30px -4px rgba(0, 0, 0, 0.12), 0 4px 10px -2px rgba(0, 0, 0, 0.05);
 

@@ -26,26 +26,7 @@
       ease: 'power3.out'
     });
 
-    // 2. Hero Banner: Subtle scale up
-    tl.from('.hero-banner', {
-      scale: 0.98,
-      opacity: 0,
-      duration: 0.35,
-      ease: 'power3.out'
-    }, '-=0.2');
-
-    // 3. Hero Scripted Text: Snappy float
-    tl.from('.hero-script-zone', {
-      scale: 0.88,
-      y: 10,
-      rotation: -8,
-      opacity: 0,
-      duration: 0.38,
-      ease: 'back.out(1.5)'
-    }, '-=0.2');
-
-
-    // 5. Favorite Apps Parent & Cards
+    // 2. Saved workspaces and Favorite Apps
     tl.from('.favorites-section', {
       y: 12,
       opacity: 0,
@@ -54,22 +35,23 @@
     }, '-=0.2');
 
     tl.from('.fav-card, .fav-add-card', {
-      y: 12,
+      y: 10,
       opacity: 0,
       scale: 0.96,
-      stagger: 0.02,
-      duration: 0.28,
+      stagger: 0.018,
+      duration: 0.24,
       ease: 'power2.out',
       clearProps: 'opacity,transform'
     }, '-=0.22');
 
-    // 6. Application Catalog Section & Category Pills
+    // 3. Application Catalog Section
     // NOTE: Animate the parent container cleanly so cards are ALWAYS 100% visible on load
     tl.from('.catalog-section', {
       y: 12,
       opacity: 0,
       duration: 0.32,
-      ease: 'power3.out'
+      ease: 'power3.out',
+      clearProps: 'opacity,transform'
     }, '-=0.2');
 
     if (document.querySelector('.category-pill-btn')) {
@@ -83,8 +65,8 @@
       }, '-=0.22');
     }
 
-    // 7. Weather Widget & Right Sidebar Unified Card: Snappy slide-in
-    tl.from(['.widget-datetime-card', '.dashboard-side-col > *'], {
+    // 4. Focused company sidebar
+    tl.from('.dashboard-side-col > *', {
       x: 20,
       opacity: 0,
       scale: 0.98,
@@ -100,8 +82,6 @@
   // ==========================================================================
   function init3DCardTilt() {
     const cardSelectors = [
-      '.fav-card',
-      '.app-catalog-card',
       '.quicklink-tile-btn',
       '.widget-company-card',
       '.widget-announcements-card',
@@ -219,6 +199,18 @@
     );
   };
 
+  function animateInitialCatalogCards() {
+    if (window.location.search.includes('noanim')) return;
+
+    // Let the catalog's ResizeObserver finish calculating complete rows first.
+    // This ensures the entrance animation targets the final cards rendered on load.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        window.animateCatalogCards();
+      });
+    });
+  }
+
   // ==========================================================================
   // 5. Fluid Theme Switcher Sliding Thumb & 360° Icon Spin (Snappy Spring Physics)
   // ==========================================================================
@@ -288,6 +280,7 @@
   // ==========================================================================
   function init() {
     initPageEntrance();
+    animateInitialCatalogCards();
     init3DCardTilt();
     initHapticPressPhysics();
     enhanceModalAnimations();
