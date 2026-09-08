@@ -37,6 +37,9 @@
         $bgColor = $catalogIconColors[strtolower($app['iconColor'])] ?? ($catalogIconColors[$app['iconColor']] ?? '#3b82f6');
     ?>
     <div class="app-catalog-card" data-app-id="<?= htmlspecialchars($app['id']) ?>" onclick="window.launchApp('<?= htmlspecialchars($app['id']) ?>')">
+      <span class="card-icon-watermark" style="color: <?= $bgColor ?>;" aria-hidden="true">
+        <span class="card-icon-watermark-glyph"><?= renderIcon($app['icon'], '', 82) ?></span>
+      </span>
       <div class="app-card-icon-box" style="background-color: <?= $bgColor ?>;">
         <?= renderIcon($app['icon'], '', 22) ?>
       </div>

@@ -360,6 +360,9 @@
       const bgColor = ICON_COLORS[app.iconColor] || '#7c3aed';
 
       card.innerHTML = `
+        <span class="card-icon-watermark" style="color: ${bgColor};" aria-hidden="true">
+          <span class="card-icon-watermark-glyph">${getIconSvg(app.icon, 82)}</span>
+        </span>
         <div class="fav-card-icon" style="background-color: ${bgColor};">
           ${getIconSvg(app.icon, 20)}
         </div>
@@ -821,6 +824,9 @@
         const bgColor = ICON_COLORS[app.iconColor] || '#2563eb';
 
         card.innerHTML = `
+          <span class="card-icon-watermark" style="color: ${bgColor};" aria-hidden="true">
+            <span class="card-icon-watermark-glyph">${getIconSvg(app.icon, 82)}</span>
+          </span>
           <div class="app-card-icon-box" style="background-color: ${bgColor};">
             ${getIconSvg(app.icon, 22)}
           </div>

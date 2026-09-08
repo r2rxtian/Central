@@ -424,6 +424,7 @@
 
 .fav-card {
   position: relative;
+  isolation: isolate;
   background: var(--bg-card-alt);
   border: 1px solid var(--border-card);
   border-radius: var(--radius-md);
@@ -449,12 +450,60 @@
   box-shadow: var(--shadow-card-hover);
 }
 
+/* Decorative app mark contained inside the existing card footprint. */
+.card-icon-watermark {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.card-icon-watermark::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 32%;
+  background: linear-gradient(102deg, currentColor 0%, currentColor 24%, transparent 100%);
+  clip-path: ellipse(82% 112% at 0% 50%);
+  opacity: 0.035;
+}
+
+.card-icon-watermark-glyph {
+  position: absolute;
+  top: 50%;
+  right: 8%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.055;
+  transform: translateY(-50%) rotate(-7deg) scale(1.12);
+  transform-origin: center;
+}
+
+.card-icon-watermark-glyph svg {
+  display: block;
+  width: 82px;
+  height: 82px;
+  stroke-width: 1.45;
+}
+
+[data-theme="dark"] .card-icon-watermark-glyph {
+  opacity: 0.08;
+}
+
+[data-theme="dark"] .card-icon-watermark::before {
+  opacity: 0.055;
+}
+
 .fav-card-icon {
   width: 58px;
   min-width: 58px;
   height: 100%;
   align-self: stretch;
-  border-radius: 13px 32px 32px 13px;
+  border-radius: 13px 0 0 13px;
+  clip-path: polygon(0 0, 100% 0, 77% 100%, 0 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -462,6 +511,7 @@
   color: #ffffff;
   flex-shrink: 0;
   position: relative;
+  z-index: 1;
   overflow: hidden;
   background-image: 
     linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.08) 40%, rgba(0, 0, 0, 0.1) 100%),
@@ -497,6 +547,8 @@
 .fav-card-icon svg {
   position: relative;
   z-index: 2;
+  width: 21px;
+  height: 21px;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.16));
   transition: transform var(--transition-fast);
 }
@@ -518,6 +570,8 @@
 }
 
 .fav-card-details {
+  position: relative;
+  z-index: 1;
   flex: 1;
   min-width: 0;
   display: flex;
@@ -739,6 +793,7 @@
 /* Chunky Inner App Card */
 .app-catalog-card {
   position: relative;
+  isolation: isolate;
   background: var(--bg-card-alt);
   border: 1px solid var(--border-card);
   border-radius: var(--radius-md);
@@ -769,7 +824,8 @@
   min-width: 58px;
   height: 100%;
   align-self: stretch;
-  border-radius: 13px 32px 32px 13px;
+  border-radius: 13px 0 0 13px;
+  clip-path: polygon(0 0, 100% 0, 77% 100%, 0 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -777,6 +833,7 @@
   color: #ffffff;
   flex-shrink: 0;
   position: relative;
+  z-index: 1;
   overflow: hidden;
   background-image: 
     linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.08) 40%, rgba(0, 0, 0, 0.1) 100%),
@@ -812,6 +869,8 @@
 .app-card-icon-box svg {
   position: relative;
   z-index: 2;
+  width: 21px;
+  height: 21px;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.16));
   transition: transform var(--transition-fast);
 }
@@ -833,6 +892,8 @@
 }
 
 .app-card-details {
+  position: relative;
+  z-index: 1;
   flex: 1;
   min-width: 0;
   display: flex;
@@ -862,6 +923,8 @@
 }
 
 .app-card-menu-btn {
+  position: relative;
+  z-index: 1;
   width: 30px;
   height: 30px;
   border-radius: 6px;
