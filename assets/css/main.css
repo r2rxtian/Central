@@ -400,8 +400,8 @@ input {
   min-width: 0;
 }
 
-.portal-favorites-panel,
-.portal-top-row .favorites-section,
+.portal-workspace-panel,
+.portal-top-row .workspace-section,
 .portal-top-row .dashboard-side-col,
 .portal-top-row .sidebar-unified-card {
   min-width: 0;

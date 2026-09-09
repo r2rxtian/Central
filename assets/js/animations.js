@@ -26,15 +26,15 @@
       ease: 'power3.out'
     });
 
-    // 2. Saved workspaces and Favorite Apps
-    tl.from('.favorites-section', {
+    // 2. Saved workspaces
+    tl.from('.workspace-section', {
       y: 12,
       opacity: 0,
       duration: 0.3,
       ease: 'power3.out'
     }, '-=0.2');
 
-    tl.from('.fav-card, .fav-add-card', {
+    tl.from('.workspace-tab-btn, .workspace-action-btn', {
       y: 10,
       opacity: 0,
       scale: 0.96,
@@ -44,15 +44,23 @@
       clearProps: 'opacity,transform'
     }, '-=0.22');
 
-    // 3. Application Catalog Section
-    // NOTE: Animate the parent container cleanly so cards are ALWAYS 100% visible on load
+    // 3. Application Catalog entrance
     tl.from('.catalog-section', {
       y: 12,
       opacity: 0,
-      duration: 0.32,
-      ease: 'power3.out',
-      clearProps: 'opacity,transform'
+      duration: 0.3,
+      ease: 'power3.out'
     }, '-=0.2');
+
+    tl.from('.app-catalog-card', {
+      y: 10,
+      opacity: 0,
+      scale: 0.96,
+      stagger: 0.018,
+      duration: 0.24,
+      ease: 'power2.out',
+      clearProps: 'opacity,transform'
+    }, '-=0.22');
 
     if (document.querySelector('.category-pill-btn')) {
       tl.from('.category-pill-btn', {
@@ -199,18 +207,6 @@
     );
   };
 
-  function animateInitialCatalogCards() {
-    if (window.location.search.includes('noanim')) return;
-
-    // Let the catalog's ResizeObserver finish calculating complete rows first.
-    // This ensures the entrance animation targets the final cards rendered on load.
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        window.animateCatalogCards();
-      });
-    });
-  }
-
   // ==========================================================================
   // 5. Fluid Theme Switcher Sliding Thumb & 360° Icon Spin (Snappy Spring Physics)
   // ==========================================================================
@@ -280,7 +276,6 @@
   // ==========================================================================
   function init() {
     initPageEntrance();
-    animateInitialCatalogCards();
     init3DCardTilt();
     initHapticPressPhysics();
     enhanceModalAnimations();

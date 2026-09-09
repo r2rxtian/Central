@@ -15,7 +15,6 @@
     currentUser: window.CP_DATA?.currentUser || {},
     
     // Persistent User Preferences
-    favorites: [],
     workspaces: [],
     defaultWorkspaceId: null,
     
@@ -25,7 +24,6 @@
     searchQuery: '',
     currentPage: 1,
     itemsPerPage: 20,
-    isEditFavorites: false,
     activeAnnouncementIdx: 0,
     contextMenuAppId: null,
     theme: 'light'
@@ -34,33 +32,13 @@
   const state = window.CentralState;
 
   // LocalStorage Keys
-  const STORAGE_FAVORITES_KEY = 'centralpoint_favorites_v1';
   const STORAGE_WORKSPACES_KEY = 'centralpoint_workspaces_v1';
   const STORAGE_DEFAULT_WS_KEY = 'centralpoint_default_ws_v1';
   const STORAGE_THEME_KEY = 'centralpoint_theme_v1';
 
   // Initialize Local Storage & Defaults
   function initStorage() {
-    // 1. Favorites
-    try {
-      const storedFavs = localStorage.getItem(STORAGE_FAVORITES_KEY);
-      if (storedFavs) {
-        state.favorites = JSON.parse(storedFavs);
-      } else {
-        state.favorites = [
-          'people-navee',
-          'employee-email',
-          'itickethub',
-          'docusign',
-          'meeting-rooms'
-        ];
-        saveFavorites();
-      }
-    } catch (e) {
-      state.favorites = ['people-navee', 'employee-email', 'itickethub', 'docusign', 'meeting-rooms'];
-    }
-
-    // 2. Workspaces
+    // 1. Workspaces
     try {
       const storedWorkspaces = localStorage.getItem(STORAGE_WORKSPACES_KEY);
       if (storedWorkspaces) {
@@ -99,7 +77,7 @@
       state.workspaces = [];
     }
 
-    // 3. Default Workspace
+    // 2. Default Workspace
     try {
       const defaultWs = localStorage.getItem(STORAGE_DEFAULT_WS_KEY);
       if (defaultWs && defaultWs !== 'all') {
@@ -113,14 +91,6 @@
 
     // Default to 'all' so the 48-application catalog matches the reference view on load
     state.activeWorkspaceId = 'all';
-  }
-
-  function saveFavorites() {
-    try {
-      localStorage.setItem(STORAGE_FAVORITES_KEY, JSON.stringify(state.favorites));
-    } catch (e) {
-      console.warn('Could not save favorites to localStorage', e);
-    }
   }
 
   function saveWorkspaces() {
@@ -323,12 +293,6 @@
     const menu = document.getElementById('app-context-menu');
     if (!menu) return;
 
-    const isFav = state.favorites.includes(appId);
-    const favLabel = document.getElementById('ctx-fav-label');
-    if (favLabel) {
-      favLabel.textContent = isFav ? 'Remove from Favorites' : 'Add to Favorites';
-    }
-
     // Position context menu near clicked button
     const rect = e.currentTarget.getBoundingClientRect();
     menu.style.position = 'fixed';
@@ -352,13 +316,6 @@
   document.getElementById('ctx-launch-btn')?.addEventListener('click', function () {
     if (state.contextMenuAppId) {
       window.launchApp(state.contextMenuAppId);
-      closeContextMenu();
-    }
-  });
-
-  document.getElementById('ctx-fav-toggle-btn')?.addEventListener('click', function () {
-    if (state.contextMenuAppId) {
-      window.toggleFavorite(state.contextMenuAppId);
       closeContextMenu();
     }
   });
@@ -417,6 +374,9 @@
       card.style.setProperty('--app-accent-dark', darkBgColor);
 
       card.innerHTML = `
+        <div class="fav-card-icon" aria-hidden="true">
+          ${getIconSvg(app.icon, 18)}
+        </div>
         <div class="fav-card-details">
           <div class="fav-card-name" title="${app.name}">${app.name}</div>
           <div class="fav-card-dept">${app.categoryLabel}</div>
@@ -850,6 +810,13 @@
     return true;
   }
 
+  function updateTruncatedAppNames() {
+    document.querySelectorAll('.app-catalog-card').forEach(card => {
+      const name = card.querySelector('.app-card-name');
+      card.classList.toggle('has-truncated-name', Boolean(name && name.scrollWidth > name.clientWidth));
+    });
+  }
+
   function renderCatalog(animateTransition = false) {
     const grid = document.getElementById('apps-grid-container');
     const countLabel = document.getElementById('pagination-count-label');
@@ -906,9 +873,16 @@
         card.style.setProperty('--app-accent-dark', darkBgColor);
 
         card.innerHTML = `
+          <div class="app-card-icon-box" aria-hidden="true">
+            ${getIconSvg(app.icon, 18)}
+          </div>
           <div class="app-card-details">
-            <div class="app-card-name" title="${app.name}">${app.name}</div>
+            <div class="app-card-name">${app.name}</div>
             <div class="app-card-category">${app.categoryLabel}</div>
+          </div>
+          <div class="app-name-popover" aria-hidden="true">
+            <span class="app-name-popover-label">Application</span>
+            <span class="app-name-popover-text">${app.name}</span>
           </div>
           <button class="app-card-menu-btn" title="Options">
             ${getIconSvg('dots-vertical', 18)}
@@ -925,6 +899,8 @@
 
         grid.appendChild(card);
       });
+
+      updateTruncatedAppNames();
     }
 
     // Update Pagination Label
@@ -1269,9 +1245,6 @@
     if (typeof window.animateThemeToggle === 'function' && showNotice) {
       window.animateThemeToggle(theme);
     }
-    if (showNotice) {
-      window.showToast(theme === 'light' ? 'Light mode activated' : 'Dark mode activated');
-    }
   }
 
   function toggleTheme() {
@@ -1303,7 +1276,6 @@
     initTheme();
     initStorage();
     renderWorkspaces();
-    renderFavorites();
     updateCatalogPageSize(false);
     renderCatalog();
     updateClock();
@@ -1316,6 +1288,7 @@
         if (resizeFrame) cancelAnimationFrame(resizeFrame);
         resizeFrame = requestAnimationFrame(() => {
           if (updateCatalogPageSize(true)) renderCatalog(false);
+          else updateTruncatedAppNames();
         });
       });
       catalogResizeObserver.observe(catalogGrid);

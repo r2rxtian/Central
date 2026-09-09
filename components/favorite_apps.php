@@ -38,6 +38,9 @@
         $darkBgColor = $categoryAccentColorsDark[$categoryKey] ?? '#6f7788';
     ?>
     <div class="fav-card" style="--app-accent: <?= $bgColor ?>; --app-accent-dark: <?= $darkBgColor ?>;" data-app-id="<?= htmlspecialchars($app['id']) ?>" onclick="window.launchApp('<?= htmlspecialchars($app['id']) ?>')">
+      <div class="fav-card-icon" aria-hidden="true">
+        <?= renderIcon($app['icon'], '', 18) ?>
+      </div>
       <div class="fav-card-details">
         <div class="fav-card-name" title="<?= htmlspecialchars($app['name']) ?>"><?= htmlspecialchars($app['name']) ?></div>
         <div class="fav-card-dept"><?= htmlspecialchars($app['categoryLabel']) ?></div>

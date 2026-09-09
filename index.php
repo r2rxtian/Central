@@ -46,10 +46,10 @@ $initialThemeAttr = (isset($_GET['theme']) && $_GET['theme'] === 'dark') ? ' dat
 
     <!-- Main Dashboard Container: Fluid Full-Width -->
     <main class="dashboard-container w-full">
-      <!-- Compact Top Row: Favorites + Company Information -->
+      <!-- Compact Top Row: Workspaces + Company Information -->
       <div class="portal-top-row">
-        <div class="portal-favorites-panel">
-          <?php include __DIR__ . '/components/favorite_apps.php'; ?>
+        <div class="portal-workspace-panel">
+          <?php include __DIR__ . '/components/workspace_panel.php'; ?>
         </div>
         <aside class="dashboard-side-col">
           <?php include __DIR__ . '/components/company_sidebar.php'; ?>
@@ -78,7 +78,6 @@ $initialThemeAttr = (isset($_GET['theme']) && $_GET['theme'] === 'dark') ? ' dat
       applications: <?= json_encode($applications) ?>,
       announcements: <?= json_encode($announcements) ?>,
       quickLinks: <?= json_encode($quickLinks) ?>,
-      defaultFavoriteIds: <?= json_encode($defaultFavoriteIds) ?>,
       initialWorkspaces: <?= json_encode($initialWorkspaces) ?>
     };
   </script>

@@ -56,31 +56,7 @@
   </div>
 </div>
 
-<!-- 2. Add Favorite Modal -->
-<div class="modal-overlay" id="add-favorite-modal">
-  <div class="modal-window">
-    <div class="modal-header">
-      <h3 class="modal-title">Add to Favorite Apps</h3>
-      <button class="modal-close-btn" onclick="window.closeModal('add-favorite-modal')">&times;</button>
-    </div>
-    <div class="modal-body">
-      <input 
-        type="text" 
-        id="fav-search-input" 
-        placeholder="Search application to add to favorites..." 
-        class="modal-text-input"
-      >
-      <div id="fav-picker-list" style="max-height: 320px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
-        <!-- Populated dynamically -->
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-secondary" onclick="window.closeModal('add-favorite-modal')">Done</button>
-    </div>
-  </div>
-</div>
-
-<!-- 3. Application Launch & Details Modal -->
+<!-- 2. Application Launch & Details Modal -->
 <div class="modal-overlay" id="app-launch-modal">
   <div class="modal-window" style="max-width: 480px;">
     <div class="modal-header">
@@ -122,10 +98,6 @@
   <button class="context-menu-item" id="ctx-launch-btn">
     <?= renderIcon('arrow-up-right', '', 14) ?>
     <span>Launch App</span>
-  </button>
-  <button class="context-menu-item" id="ctx-fav-toggle-btn">
-    <?= renderIcon('star', '', 14) ?>
-    <span id="ctx-fav-label">Add to Favorites</span>
   </button>
   <button class="context-menu-item" id="ctx-details-btn">
     <?= renderIcon('file-text', '', 14) ?>

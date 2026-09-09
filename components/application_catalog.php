@@ -62,9 +62,16 @@
         $darkBgColor = $categoryAccentColorsDark[$categoryKey] ?? '#6f7788';
     ?>
     <div class="app-catalog-card" style="--app-accent: <?= $bgColor ?>; --app-accent-dark: <?= $darkBgColor ?>;" data-app-id="<?= htmlspecialchars($app['id']) ?>" onclick="window.launchApp('<?= htmlspecialchars($app['id']) ?>')">
+      <div class="app-card-icon-box" aria-hidden="true">
+        <?= renderIcon($app['icon'], '', 18) ?>
+      </div>
       <div class="app-card-details">
-        <div class="app-card-name" title="<?= htmlspecialchars($app['name']) ?>"><?= htmlspecialchars($app['name']) ?></div>
+        <div class="app-card-name"><?= htmlspecialchars($app['name']) ?></div>
         <div class="app-card-category"><?= htmlspecialchars($app['categoryLabel']) ?></div>
+      </div>
+      <div class="app-name-popover" aria-hidden="true">
+        <span class="app-name-popover-label">Application</span>
+        <span class="app-name-popover-text"><?= htmlspecialchars($app['name']) ?></span>
       </div>
       <button class="app-card-menu-btn" onclick="event.stopPropagation(); window.toggleAppContextMenu(event, '<?= htmlspecialchars($app['id']) ?>')" title="Options">
         <?= renderIcon('dots-vertical', '', 18) ?>
